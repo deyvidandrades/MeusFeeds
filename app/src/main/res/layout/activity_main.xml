@@ -12,55 +12,44 @@
         android:id="@+id/barra"
         layout="@layout/barra_main" />
 
+    <LinearLayout
+        android:id="@+id/li_nenhum_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:padding="24dp"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:contentDescription="@string/imagem_de_duas_pessoas_lendo_um_artigo_no_smartphone"
+            android:src="@drawable/undraw_sharing_articles_re_jnkp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="24sp"
+            android:background="@drawable/rounded_r16_outline"
+            android:drawablePadding="8dp"
+            android:padding="16dp"
+            android:text="@string/nenhum_artigo_foi_carregado_busque_e_adicione_novas_fontes_para_ver_novos_artigos"
+            android:textAlignment="center"
+            android:textColor="?android:textColorPrimaryInverse"
+            android:textSize="12sp"
+            app:drawableTint="?android:textColorPrimaryInverse"
+            app:drawableTopCompat="@drawable/round_info_outline_24" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_artigos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/barra" />
 
-    <LinearLayout
-        android:id="@+id/li_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/barra"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="-12dp"
-        android:background="@drawable/rounded_r16_outline"
-        android:elevation="4dp"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <Button
-            android:id="@+id/btn_gerenciar_feeds"
-            style="@style/Widget.Material3.Button.IconButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/gerenciar_feeds"
-            android:textAlignment="textStart"
-            android:textColor="?android:textColor"
-            app:icon="@drawable/round_dynamic_feed_24"
-            app:iconPadding="8dp" />
-
-        <Button
-            android:id="@+id/btn_termos"
-            style="@style/Widget.Material3.Button.IconButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/termos"
-            android:textAlignment="textStart"
-            android:textColor="?android:textColor"
-            app:icon="@drawable/outline_policy_24"
-            app:iconPadding="8dp" />
-
-        <TextView
-            android:id="@+id/tv_versao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
-            android:paddingBottom="16dp"
-            android:textColor="?android:textColorPrimaryInverse"
-            android:textSize="12sp" />
-    </LinearLayout>
+    <include layout="@layout/menu_settings" />
 
     <Button
         android:id="@+id/btn_filtro"

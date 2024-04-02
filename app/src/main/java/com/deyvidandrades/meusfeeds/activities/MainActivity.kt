@@ -10,6 +10,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.AdapterView
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.ListPopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     private lateinit var btnEscolherCategorias: Button
     private lateinit var listPopupWindow: ListPopupWindow
     private lateinit var reMenu: RelativeLayout
+    private lateinit var liNenhumArtigo: LinearLayout
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +48,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         loading = findViewById(R.id.loading)
         btnEscolherCategorias = findViewById(R.id.btn_filtro)
         reMenu = findViewById(R.id.re_menu)
+        liNenhumArtigo = findViewById(R.id.li_nenhum_item)
+
         listPopupWindow = ListPopupWindow(this, null, androidx.transition.R.attr.listPopupWindowStyle)
 
         val btnAdicionar: Button = findViewById(R.id.btn_add)
@@ -219,9 +223,11 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
         arrayArtigos.addAll(arrayNovosFeeds)
         arrayArtigos.sortBy { it.data }
-        //arrayArtigos.shuffle()
+
         adaptadorPreviewArtigos.notifyDataSetChanged()
         loading.visibility = View.GONE
+
+        liNenhumArtigo.visibility = if (arrayArtigos.isEmpty()) View.VISIBLE else View.GONE
     }
 
     override fun onItemClicked(item: Any, remover: Boolean) {
