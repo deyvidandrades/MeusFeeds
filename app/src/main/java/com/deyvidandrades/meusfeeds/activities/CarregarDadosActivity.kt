@@ -13,9 +13,9 @@ import com.deyvidandrades.meusfeeds.R
 import com.deyvidandrades.meusfeeds.adaptadoes.AdaptadorFeedGroup
 import com.deyvidandrades.meusfeeds.assistentes.Persistencia
 import com.deyvidandrades.meusfeeds.assistentes.RequestManager
+import com.deyvidandrades.meusfeeds.assistentes.RssParser
 import com.deyvidandrades.meusfeeds.interfaces.OnItemClickListener
 import com.deyvidandrades.meusfeeds.objetos.FeedGroup
-import com.google.gson.JsonParser
 import java.net.URL
 
 class CarregarDadosActivity : AppCompatActivity(), OnItemClickListener {
@@ -76,25 +76,8 @@ class CarregarDadosActivity : AppCompatActivity(), OnItemClickListener {
             val result = RequestManager.fazerRequisicao(url)
 
             if (result != "") {
-                val jsonObject = JsonParser.parseString("""{"data": $result}""").getAsJsonObject()
-
-                for (joArray in jsonObject["data"].asJsonArray) {
-                    val item = joArray.asJsonObject
-
-                    array.add(
-                        FeedGroup(
-                            item["title"].toString().replace("\"", ""),
-                            item["description"].toString().replace("\"", ""),
-                            item["favicon"].toString().replace("\"", ""),
-                            item["is_podcast"].toString().replace("\"", "").toBoolean(),
-                            item["item_count"].toString().replace("\"", "").toInt(),
-                            item["last_updated"].toString().replace("\"", ""),
-                            item["score"].toString().replace("\"", "").toInt(),
-                            item["site_name"].toString().replace("\"", ""),
-                            item["site_url"].toString().replace("\"", ""),
-                            item["url"].toString().replace("\"", "")
-                        )
-                    )
+                RssParser.getFeedGroups(result) {
+                    array.addAll(it)
                 }
 
                 array.sortByDescending { it.score }

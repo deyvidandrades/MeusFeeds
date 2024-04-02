@@ -1,9 +1,11 @@
 package com.deyvidandrades.meusfeeds.activities
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AlphaAnimation
@@ -14,15 +16,21 @@ import android.widget.LinearLayout
 import android.widget.ListPopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.deyvidandrades.meusfeeds.R
 import com.deyvidandrades.meusfeeds.adaptadoes.AdaptadorPreviewArtigos
+import com.deyvidandrades.meusfeeds.assistentes.AssistenteAlarmManager
+import com.deyvidandrades.meusfeeds.assistentes.AssistenteNotificacoes
 import com.deyvidandrades.meusfeeds.assistentes.Persistencia
 import com.deyvidandrades.meusfeeds.assistentes.RequestManager
+import com.deyvidandrades.meusfeeds.assistentes.RssParser
 import com.deyvidandrades.meusfeeds.dialogos.DialogoAdicionarFeedGroup
+import com.deyvidandrades.meusfeeds.dialogos.DialogoConfigurarNotificacoes
 import com.deyvidandrades.meusfeeds.interfaces.OnItemClickListener
 import com.deyvidandrades.meusfeeds.objetos.Artigo
 import com.deyvidandrades.meusfeeds.objetos.FeedGroup
@@ -56,6 +64,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         val btnAdicionar: Button = findViewById(R.id.btn_add)
         val btnReload: Button = findViewById(R.id.btn_reload)
         val btnOpcoes: Button = findViewById(R.id.btn_opcoes)
+        val btnNotificacoes: Button = findViewById(R.id.btn_notificacoes)
 
         val btnGerenciarFeeds: Button = findViewById(R.id.btn_gerenciar_feeds)
         val btnTemaEscuro: Button = findViewById(R.id.btn_mudar_tema)
@@ -111,6 +120,14 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             mudarTema()
         }
 
+        btnNotificacoes.setOnClickListener {
+            val customBottomSheet = DialogoConfigurarNotificacoes()
+            customBottomSheet.show(
+                supportFragmentManager,
+                DialogoConfigurarNotificacoes().javaClass.name
+            )
+        }
+
         reMenu.setOnClickListener {
             carregarMenu()
         }
@@ -120,6 +137,42 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         mudarTema()
         carregarFiltros()
         baixarArtigos(Persistencia.getFeedGroups())
+
+        configurarPermissoesLocalizacao()
+    }
+
+    private fun configurarPermissoesLocalizacao() {
+
+        val notificationPermissionRequest =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+                when {
+                    permissions.getOrDefault(Manifest.permission.POST_NOTIFICATIONS, false) -> {
+                        configurarNotificacoes()
+                    }
+                }
+            }
+
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) -> {
+                configurarNotificacoes()
+            }
+
+            else -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    notificationPermissionRequest.launch(
+                        arrayOf(
+                            Manifest.permission.POST_NOTIFICATIONS
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    private fun configurarNotificacoes() {
+        AssistenteNotificacoes.cancelarNotificacao(this)
+        AssistenteNotificacoes.criarCanalDeNotificacoes(this)
+        AssistenteAlarmManager.criarAlarme(this)
     }
 
     private fun mudarTema() {
@@ -191,7 +244,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun baixarArtigos(array: ArrayList<FeedGroup>, numMaximo: Int = 5) {
+    private fun baixarArtigos(array: ArrayList<FeedGroup>) {
         val arrayNovosFeeds = ArrayList<Artigo>()
         arrayArtigos.clear()
         for (feedGroup in array) {
@@ -201,35 +254,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
                     RequestManager.fazerRequisicao(URL(feedGroup.url))
 
                 if (result != "") {
-
-                    val regexItem = """.*?<item>(?<item>.+?)</item>.*?"""
-                    val matches = Regex(regexItem).findAll(result)
-
-                    var index = numMaximo
-                    matches.forEach { matchResult ->
-                        if (index >= 1) {
-
-                            val titulo = Regex("""<title>(.+?)</title>""").find(matchResult.value)
-                            val data = Regex("""<pubDate>(.+?)</pubDate>""").find(matchResult.value)
-                            val descricao = Regex("""<description>(.+?)</description>""").find(matchResult.value)
-                            val conteudo = Regex("""<content:encoded>(.+?)</content:encoded>""").find(matchResult.value)
-                            val categoria = Regex("""<category>(.+?)</category>""").find(matchResult.value)
-                            val imagem = Regex("""<media:content url="(.+?)"""").find(matchResult.value)
-
-                            val artigo = Artigo(
-                                (titulo?.value ?: "").replace("<title>", "").replace("</title>", ""),
-                                (descricao?.value ?: "").replace("<description>", "").replace("</description>", ""),
-                                (categoria?.value ?: "").replace("<category>", "").replace("</category>", ""),
-                                (data?.value ?: "").replace("<pubDate>", "").replace("</pubDate>", ""),
-                                (conteudo?.value ?: "").replace("<content:encoded>", "")
-                                    .replace("</content:encoded>", ""),
-                                (imagem?.value ?: "").replace("<media:content url=\"", "").replace("\"", ""),
-                                feedGroup
-                            )
-
-                            arrayNovosFeeds.add(artigo)
-                        }
-                        index -= 1
+                    RssParser.getArrayArtigos(feedGroup, result) {
+                        arrayArtigos.addAll(it)
                     }
                 }
             }

@@ -27,4 +27,10 @@
     <string name="leia_seus_feeds_favoritos">Leia seus feeds favoritos em um só lugar!</string>
     <string name="tema_escuro">Tema escuro</string>
     <string name="nenhum_artigo_foi_carregado_busque_e_adicione_novas_fontes_para_ver_novos_artigos">Nenhum artigo foi carregado, voce pode buscar e adicionar novas fontes para ver novos artigos.</string>
+    <string name="notificacoes">Notificações</string>
+    <string name="configurar_notifica_es">Configurar notificações</string>
+    <string name="horario_para_as_notifica_es">Horario para as notificações</string>
+    <string name="voc_receber_uma_notifica_o_di_ria_com_um_artigo_de_um_dos_seus_feeds_voc_pode_clicar_na_notifica_o_para_abrir_o_artigo_completo">Você receberá uma notificação diária com um artigo de um dos seus feeds. Você pode clicar na notificação para abrir o artigo completo</string>
+    <string name="notificacao_novo_artigo">Novo artigo disponivel</string>
+    <string name="mais_artigos">Veja mais</string>
 </resources>

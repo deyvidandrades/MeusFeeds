@@ -7,7 +7,7 @@ data class Artigo(
     val descricao: String,
     val categoria: String,
     val data: String,
-    val conteudo: String,
+    var conteudo: String,
     val imagem:String,
     val feedGroup: FeedGroup
 ) : Objeto {

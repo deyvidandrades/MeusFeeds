@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MeusFeeds"
         tools:targetApi="31">
+
+        <receiver
+            android:name=".servicos.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".activities.MainActivity"
@@ -30,6 +40,7 @@
         <activity android:name="com.deyvidandrades.meusfeeds.activities.CarregarDadosActivity" />
         <activity android:name="com.deyvidandrades.meusfeeds.activities.ArtigoActivity" />
         <activity android:name="com.deyvidandrades.meusfeeds.activities.GerenciarFeedsActivity" />
+        <activity android:name="com.deyvidandrades.meusfeeds.activities.ArtigoActivityNotificacao" />
     </application>
 
 </manifest>
