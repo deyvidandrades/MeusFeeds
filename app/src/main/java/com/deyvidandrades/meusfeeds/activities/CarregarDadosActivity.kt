@@ -73,30 +73,33 @@ class CarregarDadosActivity : AppCompatActivity(), OnItemClickListener {
         kotlinx.coroutines.runBlocking {
 
             val array = ArrayList<FeedGroup>()
-            val result = RequestManager.fazerRequisicao(this@CarregarDadosActivity, url)
-            val jsonObject = JsonParser.parseString("""{"data": $result}""").getAsJsonObject()
+            val result = RequestManager.fazerRequisicao(url)
 
-            for (joArray in jsonObject["data"].asJsonArray) {
-                val item = joArray.asJsonObject
+            if (result != "") {
+                val jsonObject = JsonParser.parseString("""{"data": $result}""").getAsJsonObject()
 
-                array.add(
-                    FeedGroup(
-                        item["title"].toString().replace("\"", ""),
-                        item["description"].toString().replace("\"", ""),
-                        item["favicon"].toString().replace("\"", ""),
-                        item["is_podcast"].toString().replace("\"", "").toBoolean(),
-                        item["item_count"].toString().replace("\"", "").toInt(),
-                        item["last_updated"].toString().replace("\"", ""),
-                        item["score"].toString().replace("\"", "").toInt(),
-                        item["site_name"].toString().replace("\"", ""),
-                        item["site_url"].toString().replace("\"", ""),
-                        item["url"].toString().replace("\"", "")
+                for (joArray in jsonObject["data"].asJsonArray) {
+                    val item = joArray.asJsonObject
+
+                    array.add(
+                        FeedGroup(
+                            item["title"].toString().replace("\"", ""),
+                            item["description"].toString().replace("\"", ""),
+                            item["favicon"].toString().replace("\"", ""),
+                            item["is_podcast"].toString().replace("\"", "").toBoolean(),
+                            item["item_count"].toString().replace("\"", "").toInt(),
+                            item["last_updated"].toString().replace("\"", ""),
+                            item["score"].toString().replace("\"", "").toInt(),
+                            item["site_name"].toString().replace("\"", ""),
+                            item["site_url"].toString().replace("\"", ""),
+                            item["url"].toString().replace("\"", "")
+                        )
                     )
-                )
-            }
+                }
 
-            array.sortByDescending { it.score }
-            carregarFeedGroups(array)
+                array.sortByDescending { it.score }
+                carregarFeedGroups(array)
+            }
         }
 
         loading.visibility = View.GONE

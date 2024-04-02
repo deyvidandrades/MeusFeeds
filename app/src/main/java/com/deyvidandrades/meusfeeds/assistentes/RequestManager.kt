@@ -13,7 +13,9 @@ import kotlin.coroutines.suspendCoroutine
 
 object RequestManager {
 
-    suspend fun fazerRequisicao(context: Context, url: URL): String = withContext(Dispatchers.IO) {
+    suspend fun fazerRequisicao(url: URL): String = withContext(Dispatchers.IO) {
+        val error= false
+
         suspendCoroutine { continuation ->
             try {
                 val connection = url.openConnection() as HttpURLConnection
@@ -38,11 +40,10 @@ object RequestManager {
 
                     continuation.resume(response.toString())
                 } else {
-                    Toast.makeText(context, "Falha ao carregar dados", Toast.LENGTH_SHORT).show()
                     continuation.resume("")
                 }
             } catch (_: Exception) {
-                Toast.makeText(context, "Falha ao carregar, tente novamente", Toast.LENGTH_SHORT).show()
+                continuation.resume("")
             }
         }
     }

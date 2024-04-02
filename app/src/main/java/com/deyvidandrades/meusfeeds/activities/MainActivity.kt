@@ -177,35 +177,39 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
             kotlinx.coroutines.runBlocking {
                 val result =
-                    RequestManager.fazerRequisicao(this@MainActivity, URL(feedGroup.url))
+                    RequestManager.fazerRequisicao(URL(feedGroup.url))
 
-                val regexItem = """.*?<item>(?<item>.+?)</item>.*?"""
-                val matches = Regex(regexItem).findAll(result)
+                if (result != "") {
 
-                var index = numMaximo
-                matches.forEach { matchResult ->
-                    if (index >= 1) {
+                    val regexItem = """.*?<item>(?<item>.+?)</item>.*?"""
+                    val matches = Regex(regexItem).findAll(result)
 
-                        val titulo = Regex("""<title>(.+?)</title>""").find(matchResult.value)
-                        val data = Regex("""<pubDate>(.+?)</pubDate>""").find(matchResult.value)
-                        val descricao = Regex("""<description>(.+?)</description>""").find(matchResult.value)
-                        val conteudo = Regex("""<content:encoded>(.+?)</content:encoded>""").find(matchResult.value)
-                        val categoria = Regex("""<category>(.+?)</category>""").find(matchResult.value)
-                        val imagem = Regex("""<media:content url="(.+?)"""").find(matchResult.value)
+                    var index = numMaximo
+                    matches.forEach { matchResult ->
+                        if (index >= 1) {
 
-                        val artigo = Artigo(
-                            (titulo?.value ?: "").replace("<title>", "").replace("</title>", ""),
-                            (descricao?.value ?: "").replace("<description>", "").replace("</description>", ""),
-                            (categoria?.value ?: "").replace("<category>", "").replace("</category>", ""),
-                            (data?.value ?: "").replace("<pubDate>", "").replace("</pubDate>", ""),
-                            (conteudo?.value ?: "").replace("<content:encoded>", "").replace("</content:encoded>", ""),
-                            (imagem?.value ?: "").replace("<media:content url=\"", "").replace("\"", ""),
-                            feedGroup
-                        )
+                            val titulo = Regex("""<title>(.+?)</title>""").find(matchResult.value)
+                            val data = Regex("""<pubDate>(.+?)</pubDate>""").find(matchResult.value)
+                            val descricao = Regex("""<description>(.+?)</description>""").find(matchResult.value)
+                            val conteudo = Regex("""<content:encoded>(.+?)</content:encoded>""").find(matchResult.value)
+                            val categoria = Regex("""<category>(.+?)</category>""").find(matchResult.value)
+                            val imagem = Regex("""<media:content url="(.+?)"""").find(matchResult.value)
 
-                        arrayNovosFeeds.add(artigo)
+                            val artigo = Artigo(
+                                (titulo?.value ?: "").replace("<title>", "").replace("</title>", ""),
+                                (descricao?.value ?: "").replace("<description>", "").replace("</description>", ""),
+                                (categoria?.value ?: "").replace("<category>", "").replace("</category>", ""),
+                                (data?.value ?: "").replace("<pubDate>", "").replace("</pubDate>", ""),
+                                (conteudo?.value ?: "").replace("<content:encoded>", "")
+                                    .replace("</content:encoded>", ""),
+                                (imagem?.value ?: "").replace("<media:content url=\"", "").replace("\"", ""),
+                                feedGroup
+                            )
+
+                            arrayNovosFeeds.add(artigo)
+                        }
+                        index -= 1
                     }
-                    index -= 1
                 }
             }
         }
