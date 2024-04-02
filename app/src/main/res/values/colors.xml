@@ -9,4 +9,6 @@
     <color name="textLight">#7A7A7A</color>
 
     <color name="accent">#5666F3</color>
+
+    <color name="transparente">#00ffffff</color>
 </resources>
