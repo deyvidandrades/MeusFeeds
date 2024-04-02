@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.text.Html
 import android.view.View
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import com.bumptech.glide.Glide
 import com.deyvidandrades.meusfeeds.R
 import com.deyvidandrades.meusfeeds.assistentes.Persistencia
@@ -22,7 +22,8 @@ class ArtigoActivity : AppCompatActivity() {
         if (artigo != null) {
             val btnVoltar: Button = findViewById(R.id.btn_voltar)
             val btnInfo: Button = findViewById(R.id.btn_info)
-            val liInfoHolder: LinearLayout = findViewById(R.id.li_info_holder)
+            val nested: NestedScrollView = findViewById(R.id.nested)
+            nested.isSmoothScrollingEnabled = true
 
             val tvFeedGroupTitulo: TextView = findViewById(R.id.tv_feed_group_titulo)
             val ivFeedGroupFavicon: ShapeableImageView = findViewById(R.id.iv_feed_group_favicon)
@@ -58,7 +59,7 @@ class ArtigoActivity : AppCompatActivity() {
             }
 
             btnInfo.setOnClickListener {
-                liInfoHolder.visibility = if (liInfoHolder.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                nested.fullScroll(View.FOCUS_DOWN)
             }
         }
     }
