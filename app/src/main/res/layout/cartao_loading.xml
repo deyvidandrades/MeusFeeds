@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha=".95"
-        android:background="@color/background" />
+        android:background="?android:colorBackground" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/progress"
             android:text="@string/carregando"
-            android:textColor="@color/accent"
+            android:textColor="?colorAccent"
             android:textSize="32sp"
             android:textStyle="bold" />
 
@@ -36,6 +36,6 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:indeterminate="true"
-            android:indeterminateTint="@color/accent" />
+            android:indeterminateTint="?colorAccent" />
     </RelativeLayout>
 </RelativeLayout>

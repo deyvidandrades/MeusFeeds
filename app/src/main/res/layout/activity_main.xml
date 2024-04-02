@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="@string/gerenciar_feeds"
             android:textAlignment="textStart"
-            android:textColor="@color/text"
+            android:textColor="?android:textColor"
             app:icon="@drawable/round_dynamic_feed_24"
             app:iconPadding="8dp" />
 
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:text="@string/termos"
             android:textAlignment="textStart"
-            android:textColor="@color/text"
+            android:textColor="?android:textColor"
             app:icon="@drawable/outline_policy_24"
             app:iconPadding="8dp" />
 
@@ -58,8 +58,8 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
             android:paddingBottom="16dp"
-            android:textColor="@color/textLight"
-            android:textSize="12sp"/>
+            android:textColor="?android:textColorPrimaryInverse"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <Button

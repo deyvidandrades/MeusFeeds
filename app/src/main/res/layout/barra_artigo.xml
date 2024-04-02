@@ -34,7 +34,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_centerVertical="true"
-                android:background="@color/backgroundDark"
+                android:background="@color/border"
                 app:shapeAppearance="@style/circle" />
 
             <TextView
@@ -60,9 +60,5 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:alpha=".1"
-        android:background="@color/text" />
+    <include layout="@layout/separador_m0" />
 </LinearLayout>

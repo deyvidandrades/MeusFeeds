@@ -1,7 +1,20 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.MeusFeeds" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+        <item name="android:colorBackground">@color/text</item>
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="android:statusBarColor">@color/text</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/text</item>
+
+        <item name="android:textColor">@color/background</item>
+        <item name="android:textColorPrimary">@color/background</item>
+        <item name="android:textColorSecondary">@color/background</item>
+        <item name="android:textColorPrimaryInverse">@color/background</item>
+
+        <item name="popupMenuBackground">@drawable/popup_categorias</item>
     </style>
 </resources>

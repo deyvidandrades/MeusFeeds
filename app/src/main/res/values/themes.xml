@@ -10,8 +10,10 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/background</item>
 
+        <item name="android:textColor">@color/text</item>
         <item name="android:textColorPrimary">@color/text</item>
         <item name="android:textColorSecondary">@color/textLight</item>
+        <item name="android:textColorPrimaryInverse">@color/textLight</item>
 
         <item name="popupMenuBackground">@drawable/popup_categorias</item>
     </style>

@@ -41,9 +41,5 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:alpha=".1"
-        android:background="@color/text" />
+    <include layout="@layout/separador_m0" />
 </LinearLayout>
