@@ -1,7 +1,5 @@
 package com.deyvidandrades.meusfeeds.assistentes
 
-import android.content.Context
-import android.widget.Toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
@@ -14,7 +12,6 @@ import kotlin.coroutines.suspendCoroutine
 object RequestManager {
 
     suspend fun fazerRequisicao(url: URL): String = withContext(Dispatchers.IO) {
-        val error= false
 
         suspendCoroutine { continuation ->
             try {
