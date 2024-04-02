@@ -191,7 +191,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun baixarArtigos(array: ArrayList<FeedGroup>, numMaximo: Int = 2) {
+    private fun baixarArtigos(array: ArrayList<FeedGroup>, numMaximo: Int = 5) {
         val arrayNovosFeeds = ArrayList<Artigo>()
         arrayArtigos.clear()
         for (feedGroup in array) {
