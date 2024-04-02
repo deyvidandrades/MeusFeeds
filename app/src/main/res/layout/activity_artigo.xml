@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".activities.ArtigoActivity">
+
+    <include
+        android:id="@+id/barra"
+        layout="@layout/barra_artigo" />
+
+    <LinearLayout
+        android:id="@+id/li_info_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/barra"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:padding="14dp"
+            android:text="@string/nao_possivel_conferir"
+            android:textAlignment="center"
+            android:textColor="@color/textLight"
+            android:textSize="16sp"
+            app:drawableTint="@color/accent"
+            app:drawableTopCompat="@drawable/round_security_24" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha=".1"
+            android:background="@color/text" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/li_info_holder">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_artigo_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/data"
+                android:textColor="@color/textLight"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_artigo_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:text="@string/titulo"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tv_artigo_categoria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_r16_outline"
+                android:backgroundTint="@color/accent"
+                android:padding="8dp"
+                android:text="@string/categoria"
+                android:textColor="@color/background"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_artigo_descricao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/descricao"
+                android:textColor="@color/text"
+                android:textSize="16sp" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_artigo_capa"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearance="@style/rounded_16" />
+
+            <TextView
+                android:id="@+id/tv_artigo_conteudo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:text="@string/descricao"
+                android:textColor="@color/text"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:alpha=".1"
+                android:background="@color/text" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:padding="14dp"
+                android:text="@string/links_estao_desativados_nos_artigos_por_questoes_de_seguranca"
+                android:textAlignment="center"
+                android:textColor="@color/textLight"
+                android:textSize="16sp"
+                app:drawableTint="@color/accent"
+                app:drawableTopCompat="@drawable/round_info_outline_24" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>
