@@ -4,7 +4,7 @@
     <string name="leia_nossos">Leia:</string>
     <string name="termos_de_servico"><u>Termos de Serviço e Política de Privacidade</u></string>
     <string name="aceitar_e_continuar">Aceitar e Continuar</string>
-    <string name="bem_vindo">Bem vindo!</string>
+    <string name="bem_vindo">Seja bem vindo ao Meus Feeds!</string>
     <string name="imagem_de_duas_pessoas_lendo_um_artigo_no_smartphone">Imagem de duas pessoas lendo um artigo no smartphone</string>
     <string name="categoria">Categoria</string>
     <string name="continuar_lendo">Continuar lendo</string>
@@ -24,4 +24,5 @@
     <string name="gerenciar_feeds">Gerenciar feeds</string>
     <string name="buscar_feeds">Buscar feeds</string>
     <string name="termos">Termos</string>
+    <string name="leia_seus_feeds_favoritos">Leia seus feeds favoritos em um só lugar!</string>
 </resources>

@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_above="@id/li_info_holder"
         android:orientation="vertical"
         android:padding="24dp">
 
@@ -33,29 +33,47 @@
             android:contentDescription="@string/imagem_de_duas_pessoas_lendo_um_artigo_no_smartphone"
             android:src="@drawable/undraw_sharing_articles_re_jnkp" />
 
-        <include
-            layout="@layout/separador"/>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24sp"
-            android:drawablePadding="8dp"
-            android:text="@string/voce_precisa_ler"
+            android:layout_marginTop="24sp"
+            android:text="@string/leia_seus_feeds_favoritos"
             android:textColor="?android:textColorPrimaryInverse"
-            android:textSize="12sp"
-            app:drawableStartCompat="@drawable/round_info_outline_24"
-            app:drawableTint="?android:textColorPrimaryInverse" />
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/li_info_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <include layout="@layout/separador_m0" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:text="@string/voce_precisa_ler"
+                android:textColor="?android:textColorPrimaryInverse"
+                android:textSize="12sp"
+                app:drawableTint="?android:textColorPrimaryInverse"
+                app:drawableTopCompat="@drawable/round_info_outline_24" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="2dp"
                 android:text="@string/leia_nossos"
                 android:textColor="?android:textColor"
@@ -64,29 +82,22 @@
             <TextView
                 android:id="@+id/tv_termos"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
+                android:padding="8dp"
                 android:text="@string/termos_de_servico"
                 android:textColor="?android:textColorPrimaryInverse"
                 android:textSize="16sp" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_continuar"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="16sp"
+            android:text="@string/aceitar_e_continuar"
+            app:icon="@drawable/round_check_circle_outline_24" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@+id/btn_continuar"
-        android:alpha=".1"
-        android:background="@color/text" />
-
-    <Button
-        android:id="@+id/btn_continuar"
-        style="@style/Widget.Material3.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="16sp"
-        android:text="@string/aceitar_e_continuar"
-        app:icon="@drawable/round_check_circle_outline_24" />
 </RelativeLayout>
