@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Feeds</string>
+    <string name="voce_precisa_ler">Before you can continue, you need to read and accept our Terms of Service and Privacy Policy.</string>
+    <string name="leia_nossos">Read:</string>
+    <string name="termos_de_servico"><u>Terms of Service and Privacy Policy</u></string>
+    <string name="aceitar_e_continuar">Accept and Continue</string>
+    <string name="bem_vindo">Welcome to My Feeds!</string>
+    <string name="imagem_de_duas_pessoas_lendo_um_artigo_no_smartphone">Image of two people reading an article on their smartphones</string>
+    <string name="categoria">Category</string>
+    <string name="continuar_lendo">Continue reading</string>
+    <string name="descricao">Description</string>
+    <string name="titulo">Title</string>
+    <string name="adicionando_novos_feeds">Adding new feeds</string>
+    <string name="adicionar_feed">Add feed</string>
+    <string name="grupo_adicionado">Feed group added</string>
+    <string name="grupo_removido">Feed group removed</string>
+    <string name="concluido">Finished</string>
+    <string name="tudo">All feeds</string>
+    <string name="data">date</string>
+    <string name="links_estao_desativados_nos_artigos_por_questoes_de_seguranca">Links are deactivated on the articles for privacy and safety reasons.</string>
+    <string name="nao_possivel_conferir">We cannot verify the sources of the feeds. For that reason, we strongly suggest that you check all the information you read in sources that you can verify.</string>
+    <string name="cole_um_endereco_de_feed_rss">Input the address for an RSS feed</string>
+    <string name="carregando">Loading</string>
+    <string name="gerenciar_feeds">Manage your feeds</string>
+    <string name="buscar_feeds">Search feeds</string>
+    <string name="termos">Terms</string>
+    <string name="leia_seus_feeds_favoritos">Read your favorite feeds in a single place!</string>
+</resources>
