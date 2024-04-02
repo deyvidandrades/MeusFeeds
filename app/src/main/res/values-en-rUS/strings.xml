@@ -26,4 +26,5 @@
     <string name="buscar_feeds">Search feeds</string>
     <string name="termos">Terms</string>
     <string name="leia_seus_feeds_favoritos">Read your favorite feeds in a single place!</string>
+    <string name="tema_escuro">Dark mode</string>
 </resources>
