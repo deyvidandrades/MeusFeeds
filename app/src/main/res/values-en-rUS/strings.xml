@@ -27,4 +27,5 @@
     <string name="termos">Terms</string>
     <string name="leia_seus_feeds_favoritos">Read your favorite feeds in a single place!</string>
     <string name="tema_escuro">Dark mode</string>
+    <string name="nenhum_artigo_foi_carregado_busque_e_adicione_novas_fontes_para_ver_novos_artigos">No article was loaded, you can search for new sources and add them to view new articles</string>
 </resources>

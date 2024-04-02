@@ -10,7 +10,6 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.AdapterView
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.ListPopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
     private lateinit var btnEscolherCategorias: Button
     private lateinit var listPopupWindow: ListPopupWindow
-    private lateinit var liMenu: LinearLayout
+    private lateinit var reMenu: RelativeLayout
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
         loading = findViewById(R.id.loading)
         btnEscolherCategorias = findViewById(R.id.btn_filtro)
-        liMenu = findViewById(R.id.li_menu)
+        reMenu = findViewById(R.id.re_menu)
         listPopupWindow = ListPopupWindow(this, null, androidx.transition.R.attr.listPopupWindowStyle)
 
         val btnAdicionar: Button = findViewById(R.id.btn_add)
@@ -101,6 +100,10 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://deyvidandrades.github.io/MeusFeeds/termos/")))
         }
 
+        reMenu.setOnClickListener {
+            carregarMenu()
+        }
+
         loading.visibility = View.VISIBLE
 
         carregarFiltros()
@@ -111,8 +114,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         fun fadeIn() {
             val fadeIn = AlphaAnimation(0f, 1f)
             fadeIn.duration = duration
-            liMenu.visibility = View.VISIBLE
-            liMenu.startAnimation(fadeIn)
+            reMenu.visibility = View.VISIBLE
+            reMenu.startAnimation(fadeIn)
 
         }
 
@@ -123,13 +126,13 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
                 override fun onAnimationStart(animation: Animation?) {}
                 override fun onAnimationRepeat(animation: Animation?) {}
                 override fun onAnimationEnd(animation: Animation?) {
-                    liMenu.visibility = View.GONE
+                    reMenu.visibility = View.GONE
                 }
             })
-            liMenu.startAnimation(fadeOut)
+            reMenu.startAnimation(fadeOut)
         }
 
-        if (liMenu.visibility == View.GONE) {
+        if (reMenu.visibility == View.GONE) {
             fadeIn()
         } else {
             fadeOut()
