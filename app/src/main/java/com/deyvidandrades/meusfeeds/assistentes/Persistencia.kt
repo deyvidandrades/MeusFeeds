@@ -11,12 +11,13 @@ object Persistencia {
     var ARTIGO_ATUAL: Artigo? = null
 
     var isFirstTime: Boolean = true
+    var isDarkTheme: Boolean = false
 
     private var preferences: SharedPreferences? = null
 
     private var arrayFeedGroups = ArrayList<FeedGroup>()
 
-    enum class Paths { FEED_GROUPS, IS_FIRST_TIME }
+    enum class Paths { FEED_GROUPS, IS_FIRST_TIME, IS_DARK_THEME }
 
     fun getInstance(context: Context) {
         preferences = context.getSharedPreferences("MAIN_DATA", Context.MODE_PRIVATE)
@@ -30,6 +31,8 @@ object Persistencia {
             try {
                 val listaRaw = preferences!!.getString(Paths.FEED_GROUPS.name.lowercase(), "")!!
                 isFirstTime = preferences!!.getBoolean(Paths.IS_FIRST_TIME.name.lowercase(), true)
+                isDarkTheme = preferences!!.getBoolean(Paths.IS_DARK_THEME.name.lowercase(), false)
+
                 val typeToken = object : TypeToken<ArrayList<FeedGroup>>() {}.type
 
                 arrayFeedGroups.clear()
@@ -44,6 +47,7 @@ object Persistencia {
             with(preferences!!.edit()) {
                 putString(Paths.FEED_GROUPS.name.lowercase(), Gson().toJson(arrayFeedGroups))
                 putBoolean(Paths.IS_FIRST_TIME.name.lowercase(), isFirstTime)
+                putBoolean(Paths.IS_DARK_THEME.name.lowercase(), isDarkTheme)
                 commit()
             }
 
@@ -53,6 +57,11 @@ object Persistencia {
 
     fun setFirstTime() {
         isFirstTime = false
+        salvarDados()
+    }
+
+    fun setDarkTheme() {
+        isDarkTheme = !isDarkTheme
         salvarDados()
     }
 

@@ -15,6 +15,7 @@ import android.widget.ListPopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.deyvidandrades.meusfeeds.R
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         val btnOpcoes: Button = findViewById(R.id.btn_opcoes)
 
         val btnGerenciarFeeds: Button = findViewById(R.id.btn_gerenciar_feeds)
+        val btnTemaEscuro: Button = findViewById(R.id.btn_mudar_tema)
         val btnTermos: Button = findViewById(R.id.btn_termos)
         val tvVersao: TextView = findViewById(R.id.tv_versao)
 
@@ -104,14 +106,26 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://deyvidandrades.github.io/MeusFeeds/termos/")))
         }
 
+        btnTemaEscuro.setOnClickListener {
+            Persistencia.setDarkTheme()
+            mudarTema()
+        }
+
         reMenu.setOnClickListener {
             carregarMenu()
         }
 
         loading.visibility = View.VISIBLE
 
+        mudarTema()
         carregarFiltros()
         baixarArtigos(Persistencia.getFeedGroups())
+    }
+
+    private fun mudarTema() {
+        AppCompatDelegate.setDefaultNightMode(
+            if (Persistencia.isDarkTheme) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        )
     }
 
     private fun carregarMenu(duration: Long = 200) {
