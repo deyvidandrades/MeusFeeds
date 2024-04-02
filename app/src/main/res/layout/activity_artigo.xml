@@ -87,7 +87,6 @@
                 android:id="@+id/li_info_holder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/barra"
                 android:orientation="vertical">
 
                 <TextView
