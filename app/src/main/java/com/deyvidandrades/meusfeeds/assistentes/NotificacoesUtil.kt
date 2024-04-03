@@ -72,48 +72,59 @@ object NotificacoesUtil {
                 pendingIntentMaisArtigos
             ).build()
 
-            //CRIANDO A NOTIFICACAO
-            val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setAutoCancel(true)
-                .setColorized(true)
-                .setShowWhen(true)
-                .setColor(context.getColor(R.color.accent))
-                .setCategory(Notification.CATEGORY_MESSAGE)
-                .setContentTitle(Html.fromHtml(artigo.titulo, Html.FROM_HTML_MODE_COMPACT))
-                .setContentText(
-                    Html.fromHtml(
+            RequestManager.carregarImagem(context, artigo.imagem) { bitmap ->
+                //CRIANDO A NOTIFICACAO
+                val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setAutoCancel(true)
+                    .setColorized(true)
+                    .setShowWhen(true)
+                    .setColor(context.getColor(R.color.accent))
+                    .setCategory(Notification.CATEGORY_MESSAGE)
+                    .setContentTitle(Html.fromHtml(artigo.titulo, Html.FROM_HTML_MODE_COMPACT))
+                    .setContentText(
                         Html.fromHtml(
-                            artigo.descricao,
+                            Html.fromHtml(
+                                artigo.descricao,
+                                Html.FROM_HTML_MODE_COMPACT
+                            ).toString(),
                             Html.FROM_HTML_MODE_COMPACT
-                        ).toString(),
-                        Html.FROM_HTML_MODE_COMPACT
+                        )
                     )
-                )
-                .setSubText(context.getString(R.string.notificacao_novo_artigo))
-                .setSmallIcon(R.drawable.rounded_space_dashboard_24)
-                .setContentIntent(
-                    PendingIntent.getActivity(
-                        context,
-                        0,
-                        Intent(context, MainActivity::class.java).apply {
-                            //flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            // flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        },
-                        PendingIntent.FLAG_IMMUTABLE
+                    .setSubText(context.getString(R.string.notificacao_novo_artigo))
+                    .setSmallIcon(R.drawable.rounded_space_dashboard_24)
+                    .setContentIntent(
+                        PendingIntent.getActivity(
+                            context,
+                            0,
+                            Intent(context, MainActivity::class.java).apply {
+                                //flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                // flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            },
+                            PendingIntent.FLAG_IMMUTABLE
+                        )
                     )
-                )
-                .addAction(actionContinuarLendo)
-                .addAction(actionMaisArtigos)
+                    .addAction(actionContinuarLendo)
+                    .addAction(actionMaisArtigos)
 
-            with(NotificationManagerCompat.from(context)) {
-                if (ActivityCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.POST_NOTIFICATIONS
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    return@getArrayArtigos
+                if (bitmap != null) {
+                    builder
+                        .setLargeIcon(bitmap)
+                        .setStyle(
+                            NotificationCompat.BigPictureStyle()
+                                .bigPicture(bitmap)
+                        )
                 }
-                notify(NOTIFICATION_ID, builder.build())
+
+                with(NotificationManagerCompat.from(context)) {
+                    if (ActivityCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.POST_NOTIFICATIONS
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        return@carregarImagem
+                    }
+                    notify(NOTIFICATION_ID, builder.build())
+                }
             }
         }
     }

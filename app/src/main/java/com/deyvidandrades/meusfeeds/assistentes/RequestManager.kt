@@ -1,6 +1,7 @@
 package com.deyvidandrades.meusfeeds.assistentes
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
@@ -64,7 +65,6 @@ object RequestManager {
                     isFirstResource: Boolean
                 ): Boolean {
                     view.visibility = View.GONE
-                    DWS.getDados(e.toString())
                     return false
                 }
 
@@ -76,12 +76,39 @@ object RequestManager {
                     isFirstResource: Boolean
                 ): Boolean {
                     view.visibility = View.VISIBLE
-                    DWS.getDados("DEU")
                     return false
                 }
 
             }).into(view)
         } else
             view.visibility = View.GONE
+    }
+
+    fun carregarImagem(context: Context, url: String, listener: (Bitmap?) -> Unit) {
+        if (url != "") {
+            Glide.with(context)
+                .asBitmap()
+                .load(url)
+                .listener(object : RequestListener<Bitmap> {
+                    override fun onLoadFailed(
+                        e: GlideException?, model: Any?, target: Target<Bitmap>, isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        model: Any,
+                        target: Target<Bitmap>?,
+                        dataSource: DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        listener.invoke(resource)
+                        return true
+                    }
+
+                }).submit()
+        } else
+            listener.invoke(null)
     }
 }
