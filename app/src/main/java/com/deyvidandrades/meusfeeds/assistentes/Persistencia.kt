@@ -12,13 +12,15 @@ object Persistencia {
 
     var isFirstTime: Boolean = true
     var isDarkTheme: Boolean = false
-    var horarioNotificacao: Int = 8
+    var notificacao: Boolean = true
+    var updateArtigos: Long = -1
 
     private var preferences: SharedPreferences? = null
 
     private var arrayFeedGroups = ArrayList<FeedGroup>()
+    private var arrayArtigos = ArrayList<Artigo>()
 
-    enum class Paths { FEED_GROUPS, IS_FIRST_TIME, IS_DARK_THEME, HORARIO_NOTIFICACOES }
+    enum class Paths { FEED_GROUPS, ARTIGOS, IS_FIRST_TIME, IS_DARK_THEME, NOTIFICACOES, UPDATE_ARTIGOS }
 
     fun getInstance(context: Context) {
         preferences = context.getSharedPreferences("MAIN_DATA", Context.MODE_PRIVATE)
@@ -28,20 +30,32 @@ object Persistencia {
     /*FLUXO DADOS*/
 
     private fun carregarDados() {
-        if (preferences != null)
+        if (preferences != null) {
+            val listaRawFeedGroups = preferences!!.getString(Paths.FEED_GROUPS.name.lowercase(), "")!!
+            val listaRawArtigos = preferences!!.getString(Paths.ARTIGOS.name.lowercase(), "")!!
+
+            updateArtigos = preferences!!.getLong(Paths.UPDATE_ARTIGOS.name.lowercase(), -1)
+            isFirstTime = preferences!!.getBoolean(Paths.IS_FIRST_TIME.name.lowercase(), true)
+            isDarkTheme = preferences!!.getBoolean(Paths.IS_DARK_THEME.name.lowercase(), false)
+            notificacao = preferences!!.getBoolean(Paths.NOTIFICACOES.name.lowercase(), true)
+
+            val typeTokenFeedGroup = object : TypeToken<ArrayList<FeedGroup>>() {}.type
+            val typeTokenArtigos = object : TypeToken<ArrayList<Artigo>>() {}.type
+
             try {
-                val listaRaw = preferences!!.getString(Paths.FEED_GROUPS.name.lowercase(), "")!!
-                isFirstTime = preferences!!.getBoolean(Paths.IS_FIRST_TIME.name.lowercase(), true)
-                isDarkTheme = preferences!!.getBoolean(Paths.IS_DARK_THEME.name.lowercase(), false)
-                horarioNotificacao = preferences!!.getInt(Paths.HORARIO_NOTIFICACOES.name.lowercase(), 8)
-
-                val typeToken = object : TypeToken<ArrayList<FeedGroup>>() {}.type
-
                 arrayFeedGroups.clear()
-                arrayFeedGroups.addAll(Gson().fromJson(listaRaw, typeToken))
+                arrayFeedGroups.addAll(Gson().fromJson(listaRawFeedGroups, typeTokenFeedGroup))
             } catch (e: NullPointerException) {
                 arrayFeedGroups = ArrayList()
             }
+
+            try {
+                arrayArtigos.clear()
+                arrayArtigos.addAll(Gson().fromJson(listaRawArtigos, typeTokenArtigos))
+            } catch (e: NullPointerException) {
+                arrayArtigos = ArrayList()
+            }
+        }
     }
 
     private fun salvarDados() {
@@ -49,15 +63,19 @@ object Persistencia {
             with(preferences!!.edit()) {
                 putBoolean(Paths.IS_FIRST_TIME.name.lowercase(), isFirstTime)
                 putBoolean(Paths.IS_DARK_THEME.name.lowercase(), isDarkTheme)
-                putInt(Paths.HORARIO_NOTIFICACOES.name.lowercase(), horarioNotificacao)
+                putBoolean(Paths.NOTIFICACOES.name.lowercase(), notificacao)
+
                 putString(Paths.FEED_GROUPS.name.lowercase(), Gson().toJson(arrayFeedGroups))
+
+                putString(Paths.ARTIGOS.name.lowercase(), Gson().toJson(arrayArtigos))
+                putLong(Paths.UPDATE_ARTIGOS.name.lowercase(), updateArtigos)
+
                 commit()
             }
 
             carregarDados()
         }
     }
-
 
     /*FLUXO SETTINGS*/
     fun setFirstTime() {
@@ -70,10 +88,9 @@ object Persistencia {
         salvarDados()
     }
 
-    fun setNovoHorarioNotificacao(context: Context, valor: Int) {
-        horarioNotificacao = valor
+    fun setNotificacoes() {
+        notificacao = !notificacao
         salvarDados()
-        AssistenteAlarmManager.criarAlarme(context)
     }
 
     /*FLUXO FEED GROUPS*/
@@ -104,4 +121,17 @@ object Persistencia {
 
         return false
     }
+
+    /*ARTIGOS*/
+    fun setArrayArtigos(array: ArrayList<Artigo>, timeInMillis: Long) {
+        arrayArtigos.clear()
+        arrayArtigos.addAll(array)
+        updateArtigos = timeInMillis
+        salvarDados()
+    }
+
+    fun getArrayArtigos(listener: (ArrayList<Artigo>, data: Long) -> Unit) {
+        listener.invoke(arrayArtigos, updateArtigos)
+    }
+
 }

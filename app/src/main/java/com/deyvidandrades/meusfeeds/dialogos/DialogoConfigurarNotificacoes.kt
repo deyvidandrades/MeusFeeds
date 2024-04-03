@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.deyvidandrades.meusfeeds.R
 import com.deyvidandrades.meusfeeds.assistentes.Persistencia
+import com.deyvidandrades.meusfeeds.assistentes.WorkManagerUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.materialswitch.MaterialSwitch
-import com.google.android.material.slider.Slider
 
 class DialogoConfigurarNotificacoes : BottomSheetDialogFragment() {
 
@@ -20,29 +20,23 @@ class DialogoConfigurarNotificacoes : BottomSheetDialogFragment() {
         val btnConcluido: Button = dialogoView.findViewById(R.id.btn_concluido)
 
         val switchNotificacoes: MaterialSwitch = dialogoView.findViewById(R.id.switch_notificacoes)
-        val sliderNotificacoes: Slider = dialogoView.findViewById(R.id.slider_notificacoes)
-
-        val horarioNotificacoes = Persistencia.horarioNotificacao
 
         btnVoltar.setOnClickListener {
             dismiss()
         }
 
+        switchNotificacoes.isChecked = Persistencia.notificacao
+
         btnConcluido.setOnClickListener {
-            Persistencia.setNovoHorarioNotificacao(
-                requireContext(),
-                if (switchNotificacoes.isChecked) sliderNotificacoes.value.toInt() else -1
-            )
+            if (switchNotificacoes.isChecked) {
+                WorkManagerUtil.stopWorker(requireContext(), WorkManagerUtil.Tipo.ARTIGOS)
+                WorkManagerUtil.iniciarWorker(requireContext(), WorkManagerUtil.Tipo.ARTIGOS)
+            }
+
+            if (switchNotificacoes.isChecked != Persistencia.notificacao)
+                Persistencia.setNotificacoes()
+
             dismiss()
-        }
-
-        switchNotificacoes.isChecked = horarioNotificacoes != -1
-        sliderNotificacoes.isEnabled = horarioNotificacoes != -1
-        sliderNotificacoes.value = if (horarioNotificacoes != -1) horarioNotificacoes.toFloat() else 0.0F
-
-        switchNotificacoes.setOnCheckedChangeListener { _, b ->
-            sliderNotificacoes.isEnabled = b
-            return@setOnCheckedChangeListener
         }
 
         return dialogoView

@@ -29,26 +29,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/horario_para_as_notifica_es" />
-
-        <com.google.android.material.slider.Slider
-            android:id="@+id/slider_notificacoes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:stepSize="1.0"
-            android:valueFrom="0.0"
-            android:valueTo="23.0" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginVertical="24sp"
             android:background="@drawable/rounded_r16_outline"
             android:drawablePadding="8dp"
             android:padding="16dp"
-            android:text="@string/voc_receber_uma_notifica_o_di_ria_com_um_artigo_de_um_dos_seus_feeds_voc_pode_clicar_na_notifica_o_para_abrir_o_artigo_completo"
+            android:text="@string/voce_recebera_uma_notificacao"
             android:textAlignment="center"
             android:textColor="?android:textColorPrimaryInverse"
             android:textSize="12sp"
@@ -61,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="@string/concluido"
+            android:text="@string/salvar_e_fechar"
             app:icon="@drawable/round_check_circle_outline_24" />
     </LinearLayout>
 </RelativeLayout>
