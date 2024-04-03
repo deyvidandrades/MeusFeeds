@@ -39,14 +39,15 @@
         android:layout_marginBottom="16dp"
         android:background="@color/border"
         android:scaleType="centerCrop"
+        android:visibility="gone"
         app:shapeAppearance="@style/rounded_16" />
 
     <TextView
         android:id="@+id/tv_artigo_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/titulo"
         android:layout_marginBottom="8dp"
+        android:text="@string/titulo"
         android:textSize="20sp" />
 
     <include layout="@layout/separador_m0" />
@@ -54,8 +55,8 @@
     <TextView
         android:id="@+id/tv_artigo_descricao"
         android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/descricao"
         android:textColor="@color/textLight"
         android:textSize="14sp" />

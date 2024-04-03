@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.deyvidandrades.meusfeeds.R
+import com.deyvidandrades.meusfeeds.assistentes.RequestManager
 import com.deyvidandrades.meusfeeds.interfaces.OnItemClickListener
 import com.deyvidandrades.meusfeeds.objetos.Artigo
 import com.google.android.material.imageview.ShapeableImageView
@@ -51,12 +51,10 @@ class AdaptadorPreviewArtigos(context: Context, arrayList: ArrayList<Artigo>, li
         }
 
         holder.tvFeedGroupTitulo.text = artigo.feedGroup.titulo
-
-        holder.ivArtigoCapa.visibility = if (artigo.imagem == "") View.GONE else View.VISIBLE
         holder.tvArtigoCategoria.visibility = if (artigo.categoria == "") View.GONE else View.VISIBLE
 
-        Glide.with(context).load(artigo.imagem).into(holder.ivArtigoCapa)
-        Glide.with(context).load(artigo.feedGroup.favicon).into(holder.ivFeedGroupFavicon)
+        RequestManager.carregarImagem(context, holder.ivFeedGroupFavicon, artigo.feedGroup.favicon)
+        RequestManager.carregarImagem(context, holder.ivArtigoCapa, artigo.imagem)
     }
 
     override fun getItemCount(): Int {

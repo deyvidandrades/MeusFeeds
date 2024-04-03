@@ -7,9 +7,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
-import com.bumptech.glide.Glide
 import com.deyvidandrades.meusfeeds.R
 import com.deyvidandrades.meusfeeds.assistentes.Persistencia
+import com.deyvidandrades.meusfeeds.assistentes.RequestManager
 import com.google.android.material.imageview.ShapeableImageView
 
 class ArtigoActivity : AppCompatActivity() {
@@ -47,10 +47,8 @@ class ArtigoActivity : AppCompatActivity() {
                 Html.fromHtml(artigo.conteudo, Html.FROM_HTML_MODE_COMPACT).toString(), Html.FROM_HTML_MODE_COMPACT
             )
 
-            ivArtigoCapa.visibility = if (artigo.imagem != "") View.VISIBLE else View.GONE
-
-            Glide.with(this).load(artigo.feedGroup.favicon).into(ivFeedGroupFavicon)
-            Glide.with(this).load(artigo.imagem).into(ivArtigoCapa)
+            RequestManager.carregarImagem(this, ivFeedGroupFavicon, artigo.feedGroup.favicon)
+            RequestManager.carregarImagem(this, ivArtigoCapa, artigo.imagem)
 
             tvArtigoCategoria.visibility = if (artigo.categoria == "") View.GONE else View.VISIBLE
 

@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.deyvidandrades.meusfeeds.R
-import com.deyvidandrades.meusfeeds.assistentes.DWS
+import com.deyvidandrades.meusfeeds.assistentes.RequestManager
 import com.deyvidandrades.meusfeeds.interfaces.OnItemClickListener
 import com.deyvidandrades.meusfeeds.objetos.FeedGroup
 import com.google.android.material.imageview.ShapeableImageView
@@ -35,7 +34,7 @@ class AdaptadorFeedGroup(context: Context, arrayList: ArrayList<FeedGroup>, list
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val feedGroup = arrayList[position]
 
-        Glide.with(context).load(feedGroup.favicon).into(holder.ivFavicon)
+        RequestManager.carregarImagem(context, holder.ivFavicon, feedGroup.favicon)
 
         holder.tvFeedGroupTitulo.text = feedGroup.titulo
         holder.tvFeedGroupDescricao.text = feedGroup.descricao
@@ -43,9 +42,6 @@ class AdaptadorFeedGroup(context: Context, arrayList: ArrayList<FeedGroup>, list
 
         holder.btnAdicionarFeedGroup.visibility = if (feedGroup.adicionado) View.GONE else View.VISIBLE
         holder.btnRemoverFeedGroup.visibility = if (feedGroup.adicionado) View.VISIBLE else View.GONE
-
-
-        DWS.getDados(feedGroup.adicionado.toString())
 
         holder.btnAdicionarFeedGroup.setOnClickListener {
             listener.onItemClicked(feedGroup)
