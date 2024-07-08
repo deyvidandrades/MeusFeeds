@@ -36,4 +36,5 @@
     <string name="mais_artigos">See more</string>
     <string name="salvar_e_fechar">Save and Close</string>
     <string name="ultima_atualiza_o_em">Last update:</string>
+    <string name="falha_ao_encontrar_feed">Feed not found</string>
 </resources>

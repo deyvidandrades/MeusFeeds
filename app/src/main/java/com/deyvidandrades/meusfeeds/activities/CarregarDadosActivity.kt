@@ -42,7 +42,7 @@ class CarregarDadosActivity : AppCompatActivity(), OnItemClickListener {
         recyclerHabitos.adapter = adaptadorFeedGroup
         recyclerHabitos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        val url = intent.getStringExtra("url")
+        //val url = intent.getStringExtra("url")
 
 
         btnVoltar.setOnClickListener {
@@ -58,7 +58,9 @@ class CarregarDadosActivity : AppCompatActivity(), OnItemClickListener {
             Toast.makeText(this, "Info", Toast.LENGTH_SHORT).show()
         }
 
-        carregarFuncaoAssincrona(URL(url))
+        //carregarFuncaoAssincrona(URL(url))
+        if (Persistencia.LISTA_FEED_GROUPS != null)
+            carregarFeedGroups(Persistencia.LISTA_FEED_GROUPS!!)
     }
 
     @SuppressLint("NotifyDataSetChanged")

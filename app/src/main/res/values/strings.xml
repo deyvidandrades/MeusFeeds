@@ -35,4 +35,5 @@
     <string name="mais_artigos">Veja mais</string>
     <string name="salvar_e_fechar">Salvar e Fechar</string>
     <string name="ultima_atualiza_o_em">Ultima atualização em:</string>
+    <string name="falha_ao_encontrar_feed">Falha ao encontrar feed</string>
 </resources>

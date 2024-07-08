@@ -8,14 +8,29 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     tools:context=".activities.WelcomeActivity">
 
-    <include
-        android:id="@+id/barra"
-        layout="@layout/barra_adicionar_artigo" />
+    <LinearLayout
+        android:id="@+id/barra_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/barra"
+            layout="@layout/barra_adicionar_artigo" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="?android:colorAccent" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/barra"
+        android:layout_below="@+id/barra_holder"
         android:layout_margin="16dp"
         android:orientation="vertical">
 
@@ -44,13 +59,13 @@
             android:id="@+id/li_info_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="24dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginVertical="24sp"
                 android:background="@drawable/rounded_r16_outline"
                 android:drawablePadding="8dp"
                 android:padding="16dp"

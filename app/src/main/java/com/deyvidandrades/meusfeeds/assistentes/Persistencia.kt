@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken
 
 object Persistencia {
     var ARTIGO_ATUAL: Artigo? = null
+    var LISTA_FEED_GROUPS: ArrayList<FeedGroup>? = null
 
     var isFirstTime: Boolean = true
     var isDarkTheme: Boolean = false
