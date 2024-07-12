@@ -1,6 +1,5 @@
 package com.deyvidandrades.meusfeeds.dialogos
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -55,14 +54,17 @@ class DialogoAdicionarFeedGroup : BottomSheetDialogFragment() {
         btnAdicionarFeedGroup.setOnClickListener {
             val text = etAdicionarFeedGroup.text.toString()
             if (text != "" && text.contains(".") && text.contains("https://")) {
-                carregarFuncaoAssincrona(URL("https://feedsearch.dev/api/v1/search?url=${text}&info=true&favicon=true&opml=false&skip_crawl=false"))
+                carregarFuncaoAssincrona(text)
             }
         }
 
         return dialogoView
     }
 
-    private fun carregarFuncaoAssincrona(url: URL) {
+    private fun carregarFuncaoAssincrona(query: String) {
+        val url = URL(
+            "https://feedsearch.dev/api/v1/search?url=${query}&info=true&favicon=false&opml=false&skip_crawl=false"
+        )
         lifecycleScope.launch {
             loading.visibility = View.VISIBLE
             btnAdicionarFeedGroup.isEnabled = false
@@ -84,11 +86,8 @@ class DialogoAdicionarFeedGroup : BottomSheetDialogFragment() {
 
                     dismiss()
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.falha_ao_encontrar_feed),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(requireContext(), getString(R.string.falha_ao_encontrar_feed), Toast.LENGTH_SHORT)
+                        .show()
                 }
 
             } catch (e: Exception) {

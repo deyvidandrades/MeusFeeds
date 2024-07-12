@@ -15,10 +15,9 @@ import com.deyvidandrades.meusfeeds.objetos.FeedGroup
 import com.google.android.material.imageview.ShapeableImageView
 
 
-class AdaptadorFeedGroup(context: Context, arrayList: ArrayList<FeedGroup>, listener: OnItemClickListener) :
+class AdaptadorFeedGroup(private val context: Context, arrayList: ArrayList<FeedGroup>, listener: OnItemClickListener) :
     RecyclerView.Adapter<AdaptadorFeedGroup.ViewHolder>() {
 
-    private val context: Context
     private val listener: OnItemClickListener
     private var arrayList: ArrayList<FeedGroup> = ArrayList()
 
@@ -42,6 +41,7 @@ class AdaptadorFeedGroup(context: Context, arrayList: ArrayList<FeedGroup>, list
 
         holder.btnAdicionarFeedGroup.visibility = if (feedGroup.adicionado) View.GONE else View.VISIBLE
         holder.btnRemoverFeedGroup.visibility = if (feedGroup.adicionado) View.VISIBLE else View.GONE
+        holder.tvFeedGroupDescricao.visibility = if (feedGroup.descricao != "") View.VISIBLE else View.GONE
 
         holder.btnAdicionarFeedGroup.setOnClickListener {
             listener.onItemClicked(feedGroup)
@@ -57,25 +57,15 @@ class AdaptadorFeedGroup(context: Context, arrayList: ArrayList<FeedGroup>, list
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var ivFavicon: ShapeableImageView
-        var tvFeedGroupTitulo: TextView
-        var tvFeedGroupDescricao: TextView
-        var tvFeedGroupCount: TextView
-        var btnAdicionarFeedGroup: Button
-        var btnRemoverFeedGroup: Button
-
-        init {
-            ivFavicon = itemView.findViewById(R.id.iv_favicon)
-            tvFeedGroupTitulo = itemView.findViewById(R.id.id_feed_group_titulo)
-            tvFeedGroupDescricao = itemView.findViewById(R.id.id_feed_group_descricao)
-            tvFeedGroupCount = itemView.findViewById(R.id.id_feed_group_item_count)
-            btnAdicionarFeedGroup = itemView.findViewById(R.id.btn_adicionar_feed_group)
-            btnRemoverFeedGroup = itemView.findViewById(R.id.btn_remover_feed_group)
-        }
+        var ivFavicon: ShapeableImageView = itemView.findViewById(R.id.iv_favicon)
+        var tvFeedGroupTitulo: TextView = itemView.findViewById(R.id.id_feed_group_titulo)
+        var tvFeedGroupDescricao: TextView = itemView.findViewById(R.id.id_feed_group_descricao)
+        var tvFeedGroupCount: TextView = itemView.findViewById(R.id.id_feed_group_item_count)
+        var btnAdicionarFeedGroup: Button = itemView.findViewById(R.id.btn_adicionar_feed_group)
+        var btnRemoverFeedGroup: Button = itemView.findViewById(R.id.btn_remover_feed_group)
     }
 
     init {
-        this.context = context
         this.arrayList = arrayList
         this.listener = listener
     }
