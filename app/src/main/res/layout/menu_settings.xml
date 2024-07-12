@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="58dp"
-        android:background="@drawable/rounded_r16_outline"
+        android:background="@drawable/rounded_r16_outline_fill"
         android:elevation="2dp"
         android:orientation="vertical"
         tools:ignore="UselessParent">
@@ -26,7 +26,6 @@
             android:layout_height="wrap_content"
             android:text="@string/gerenciar_feeds"
             android:textAlignment="textStart"
-            android:textColor="?android:textColor"
             app:icon="@drawable/round_dynamic_feed_24"
             app:iconPadding="8dp" />
 
@@ -39,7 +38,6 @@
             android:layout_height="wrap_content"
             android:text="@string/notificacoes"
             android:textAlignment="textStart"
-            android:textColor="?android:textColor"
             app:icon="@drawable/round_notifications_none_24"
             app:iconPadding="8dp" />
 
@@ -50,7 +48,6 @@
             android:layout_height="wrap_content"
             android:text="@string/tema_escuro"
             android:textAlignment="textStart"
-            android:textColor="?android:textColor"
             app:icon="@drawable/outline_dark_mode_24"
             app:iconPadding="8dp" />
 
@@ -61,7 +58,6 @@
             android:layout_height="wrap_content"
             android:text="@string/termos"
             android:textAlignment="textStart"
-            android:textColor="?android:textColor"
             app:icon="@drawable/outline_policy_24"
             app:iconPadding="8dp" />
 
@@ -72,7 +68,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textColor="?android:textColorPrimaryInverse"
             android:textSize="12sp" />
     </LinearLayout>
 

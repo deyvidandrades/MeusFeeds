@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="24dp"
-    android:layout_marginVertical="12dp"
+    android:layout_margin="12dp"
     android:background="@drawable/rounded_r24_outline"
     android:orientation="vertical"
     android:padding="12dp">
@@ -16,9 +15,9 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_favicon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="?colorAccent"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="?colorSurfaceVariant"
             app:shapeAppearance="@style/circle" />
 
         <TextView
@@ -28,7 +27,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
             android:text="@string/titulo"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <include layout="@layout/separador" />
@@ -39,7 +38,6 @@
         android:layout_height="wrap_content"
         android:text="@string/descricao"
         android:layout_marginBottom="12dp"
-        android:textColor="?android:textColorPrimaryInverse"
         android:textSize="14sp" />
 
     <RelativeLayout
@@ -53,7 +51,7 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@id/btn_adicionar_feed_group"
             android:text="@string/categoria"
-            android:textColor="?android:textColorPrimaryInverse"
+            android:textColor="?colorOnSurfaceVariant"
             android:textSize="12sp" />
 
         <Button

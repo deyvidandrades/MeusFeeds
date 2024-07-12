@@ -34,7 +34,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_centerVertical="true"
-                android:background="@color/border"
+                android:background="@drawable/rounded_r16"
                 app:shapeAppearance="@style/circle" />
 
             <TextView

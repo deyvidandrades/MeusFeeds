@@ -32,7 +32,7 @@
             android:layout_marginBottom="24sp"
             android:layout_marginTop="8dp"
             android:text="@string/leia_seus_feeds_favoritos"
-            android:textColor="?android:textColorPrimaryInverse"
+            android:textColor="?colorOnSurfaceVariant"
             android:textSize="18sp" />
 
         <ImageView
@@ -68,7 +68,7 @@
                 android:padding="16dp"
                 android:text="@string/voce_precisa_ler"
                 android:textAlignment="center"
-                android:textColor="?android:textColorPrimaryInverse"
+                android:textColor="?colorOnSurfaceVariant"
                 android:textSize="12sp"
                 app:drawableTint="?android:colorAccent"
                 app:drawableTopCompat="@drawable/round_info_outline_24" />
@@ -91,7 +91,7 @@
                 android:layout_gravity="center_vertical"
                 android:padding="8dp"
                 android:text="@string/termos_de_servico"
-                android:textColor="?android:textColorPrimaryInverse"
+                android:textColor="?colorOnSurfaceVariant"
                 android:textSize="16sp" />
         </LinearLayout>
 

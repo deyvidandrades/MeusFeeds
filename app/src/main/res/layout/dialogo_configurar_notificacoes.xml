@@ -23,6 +23,8 @@
             android:id="@+id/switch_notificacoes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/rounded_r16_outline"
             android:checked="true"
             android:text="@string/notificacoes" />
 
@@ -36,7 +38,7 @@
             android:padding="16dp"
             android:text="@string/voce_recebera_uma_notificacao"
             android:textAlignment="center"
-            android:textColor="?android:textColorPrimaryInverse"
+            android:textColor="?colorOnSurfaceVariant"
             android:textSize="12sp"
             app:drawableTint="?android:colorAccent"
             app:drawableTopCompat="@drawable/round_info_outline_24" />

@@ -37,7 +37,6 @@
             android:padding="16dp"
             android:text="@string/nenhum_artigo_foi_carregado_busque_e_adicione_novas_fontes_para_ver_novos_artigos"
             android:textAlignment="center"
-            android:textColor="?android:textColorPrimaryInverse"
             android:textSize="12sp"
             app:drawableTint="?android:colorAccent"
             app:drawableTopCompat="@drawable/round_info_outline_24" />

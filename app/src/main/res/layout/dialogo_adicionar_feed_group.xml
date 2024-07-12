@@ -34,10 +34,16 @@
         android:layout_margin="16dp"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tv_versao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cole_um_endereco_de_feed_rss"
+            android:textSize="12sp" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/cole_um_endereco_de_feed_rss"
             android:textColorHint="?android:textColorPrimaryInverse"
             app:boxCornerRadiusBottomEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
@@ -51,8 +57,8 @@
                 android:id="@+id/et_feed_group_link"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textUri|textEmailAddress|textWebEditText"
-                android:textColor="?android:textColor" />
+                android:background="@drawable/rounded_r16_outline"
+                android:inputType="textUri|textEmailAddress|textWebEditText" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -71,7 +77,6 @@
                 android:padding="16dp"
                 android:text="@string/nao_possivel_conferir"
                 android:textAlignment="center"
-                android:textColor="?android:textColorPrimaryInverse"
                 android:textSize="12sp"
                 app:drawableTint="?android:colorAccent"
                 app:drawableTopCompat="@drawable/round_security_24" />

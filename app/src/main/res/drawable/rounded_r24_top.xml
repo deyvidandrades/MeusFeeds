@@ -11,7 +11,7 @@
     <!--        android:right="4dp"-->
     <!--        android:top="4dp" />-->
 
-    <solid android:color="?android:colorBackground" />
+    <solid android:color="?colorSurface" />
 
 
 </shape>
