@@ -30,11 +30,9 @@
     <string name="nenhum_artigo_foi_carregado_busque_e_adicione_novas_fontes_para_ver_novos_artigos">No article was loaded, you can search for new sources and add them to view new articles</string>
     <string name="notificacoes">Notifications</string>
     <string name="configurar_notifica_es">Setting notifications</string>
-    <string name="horario_para_as_notifica_es">Time for the notification</string>
     <string name="voce_recebera_uma_notificacao">You will receive notifications throughout the day. The notifications show the most recent article from your feeds.</string>
     <string name="notificacao_novo_artigo">New article available</string>
     <string name="mais_artigos">See more</string>
     <string name="salvar_e_fechar">Save and Close</string>
-    <string name="ultima_atualiza_o_em">Last update:</string>
     <string name="falha_ao_encontrar_feed">Feed not found</string>
 </resources>

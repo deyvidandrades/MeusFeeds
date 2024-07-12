@@ -29,11 +29,9 @@
     <string name="nenhum_artigo_foi_carregado_busque_e_adicione_novas_fontes_para_ver_novos_artigos">Nenhum artigo foi carregado, voce pode buscar e adicionar novas fontes para ver novos artigos.</string>
     <string name="notificacoes">Notificações</string>
     <string name="configurar_notifica_es">Configurar notificações</string>
-    <string name="horario_para_as_notifica_es">Horario para as notificações</string>
     <string name="voce_recebera_uma_notificacao">Você receberá notificações durante o dia. As notificações mostram o artigo mais recentes de um dos seus feeds.</string>
     <string name="notificacao_novo_artigo">Novo artigo disponivel</string>
     <string name="mais_artigos">Veja mais</string>
     <string name="salvar_e_fechar">Salvar e Fechar</string>
-    <string name="ultima_atualiza_o_em">Ultima atualização em:</string>
     <string name="falha_ao_encontrar_feed">Falha ao encontrar feed</string>
 </resources>
