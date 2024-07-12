@@ -26,18 +26,17 @@ object RssParser {
 
                 val artigo = Artigo(
                     (titulo?.value ?: "").replace("<title>", "").replace("</title>", ""),
+                    (conteudo?.value ?: "").replace("<content:encoded>", "").replace("</content:encoded>", ""),
                     (descricao?.value ?: "").replace("<description>", "").replace("</description>", ""),
-                    (categoria?.value ?: "").replace("<category>", "").replace("</category>", ""),
+                    feedGroup,
                     (data?.value ?: "").replace("<pubDate>", "").replace("</pubDate>", ""),
-                    (conteudo?.value ?: "").replace("<content:encoded>", "")
-                        .replace("</content:encoded>", ""),
                     (imagem?.value ?: "").replace("<media:content url=\"", "").replace("\"", ""),
-                    feedGroup
+                    (categoria?.value ?: "").replace("<category>", "").replace("</category>", "")
                 )
 
                 arrayList.add(artigo)
+                index -= 1
             }
-            index -= 1
         }
 
         listener.invoke(arrayList)

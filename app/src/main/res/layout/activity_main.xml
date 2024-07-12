@@ -43,30 +43,11 @@
             app:drawableTopCompat="@drawable/round_info_outline_24" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/li_holder_atualizacao"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/barra"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_ultima_atualizacao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:paddingHorizontal="24sp"
-            android:text="@string/ultima_atualiza_o_em"
-            android:textColor="?android:textColorPrimaryInverse" />
-
-        <include layout="@layout/separador_m0" />
-    </LinearLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_artigos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/li_holder_atualizacao" />
+        android:layout_below="@+id/barra" />
 
     <include layout="@layout/menu_settings" />
 

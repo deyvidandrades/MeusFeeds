@@ -27,12 +27,13 @@ object RequestManager {
             try {
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
+                connection.connectTimeout = 110000
+                connection.readTimeout = 110000
 
                 // Disable chunked transfer encoding
                 connection.setChunkedStreamingMode(0)
 
-                val responseCode = connection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_OK) {
+                if (connection.responseCode == HttpURLConnection.HTTP_OK) {
                     val inputStream = connection.inputStream
                     val reader = BufferedReader(InputStreamReader(inputStream))
                     val response = StringBuilder()

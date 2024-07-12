@@ -34,8 +34,9 @@ object NotificacoesUtil {
     fun enviarNotificacao(context: Context) {
         Persistencia.getInstance(context)
 
-        Persistencia.getArrayArtigos { artigos, _ ->
+            val artigos = Persistencia.getArtigos()
             artigos.shuffle()
+
             val artigo = artigos[0]
 
             //ACAO DE CONTINUAR LENDO
@@ -126,7 +127,7 @@ object NotificacoesUtil {
                     notify(NOTIFICATION_ID, builder.build())
                 }
             }
-        }
+
     }
 
     fun cancelarNotificacao(context: Context) {

@@ -20,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.deyvidandrades.meusfeeds.R
@@ -33,9 +34,11 @@ import com.deyvidandrades.meusfeeds.dialogos.DialogoAdicionarFeedGroup
 import com.deyvidandrades.meusfeeds.dialogos.DialogoConfigurarNotificacoes
 import com.deyvidandrades.meusfeeds.interfaces.OnItemClickListener
 import com.deyvidandrades.meusfeeds.objetos.Artigo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.net.URL
-import java.util.Calendar
 
 class MainActivity : AppCompatActivity(), OnItemClickListener {
     private val arrayArtigos = ArrayList<Artigo>()
@@ -49,7 +52,6 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     private lateinit var listPopupWindow: ListPopupWindow
     private lateinit var reMenu: RelativeLayout
     private lateinit var liNenhumArtigo: LinearLayout
-    private lateinit var tvUltimaAtualizacao: TextView
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,9 +62,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         btnEscolherCategorias = findViewById(R.id.btn_filtro)
         reMenu = findViewById(R.id.re_menu)
         liNenhumArtigo = findViewById(R.id.li_nenhum_item)
-        tvUltimaAtualizacao = findViewById(R.id.tv_ultima_atualizacao)
 
-        listPopupWindow = ListPopupWindow(this, null, androidx.transition.R.attr.listPopupWindowStyle)
+        listPopupWindow = ListPopupWindow(this, null)
 
         val btnAdicionar: Button = findViewById(R.id.btn_add)
         val btnReload: Button = findViewById(R.id.btn_reload)
@@ -242,44 +243,50 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     private fun carregarArtigos(filtro: String = "") {
         arrayArtigos.clear()
-        Persistencia.getArrayArtigos { artigos, data ->
-            if (filtro == "")
-                arrayArtigos.addAll(artigos)
-            else
-                for (item in artigos)
-                    if (item.feedGroup.titulo == filtro)
-                        arrayArtigos.add(item)
+        val artigos = Persistencia.getArtigos()
 
-            arrayArtigos.sortBy { it.data }
+        if (filtro == "" || filtro == getString(R.string.tudo))
+            arrayArtigos.addAll(artigos)
+        else
+            for (item in artigos)
+                if (item.feedGroup.titulo == filtro)
+                    arrayArtigos.add(item)
 
-            adaptadorPreviewArtigos.notifyDataSetChanged()
-            tvUltimaAtualizacao.text = "${getString(R.string.ultima_atualiza_o_em)} $data"
+        arrayArtigos.sortBy { it.data }
 
-            liNenhumArtigo.visibility = if (arrayArtigos.isEmpty()) View.VISIBLE else View.GONE
-            loading.visibility = View.GONE
-        }
+        adaptadorPreviewArtigos.notifyDataSetChanged()
+
+        liNenhumArtigo.visibility = if (arrayArtigos.isEmpty()) View.VISIBLE else View.GONE
+
+        loading.visibility = View.GONE
     }
 
     @SuppressLint("SetTextI18n")
     private fun recarregarArtigos() {
-        loading.visibility = View.VISIBLE
+        lifecycleScope.launch(Dispatchers.IO) {
+            loading.visibility = View.GONE
+            val arrayUpdate = ArrayList<Artigo>()
+            for (feedGroup in Persistencia.getFeedGroups()) {
+                runBlocking {
+                    val result = RequestManager.fazerRequisicao(URL(feedGroup.url))
 
-        val arrayUpdate = ArrayList<Artigo>()
-        for (feedGroup in Persistencia.getFeedGroups()) {
-            runBlocking {
-                val result = RequestManager.fazerRequisicao(URL(feedGroup.url))
-
-                if (result != "")
-                    RssParser.getArrayArtigos(feedGroup, result) {
-                        arrayUpdate.addAll(it)
+                    if (result != "") {
+                        RssParser.getArrayArtigos(feedGroup, result, 10) {
+                            arrayUpdate.addAll(it)
+                        }
                     }
+                }
+            }
+
+            arrayUpdate.sortBy { it.data }
+            Persistencia.updateArtigos(arrayUpdate)
+
+            loading.visibility = View.GONE
+
+            withContext(Dispatchers.Main) {
+                carregarArtigos()
             }
         }
-
-        Persistencia.setArrayArtigos(arrayUpdate, Calendar.getInstance().timeInMillis)
-        carregarArtigos()
-
-        loading.visibility = View.GONE
     }
 
     override fun onItemClicked(item: Any, remover: Boolean) {

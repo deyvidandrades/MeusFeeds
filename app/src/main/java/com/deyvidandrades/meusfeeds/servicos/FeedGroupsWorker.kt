@@ -10,7 +10,6 @@ import com.deyvidandrades.meusfeeds.assistentes.RssParser
 import com.deyvidandrades.meusfeeds.objetos.Artigo
 import kotlinx.coroutines.runBlocking
 import java.net.URL
-import java.util.Calendar
 
 class FeedGroupsWorker(appContext: Context, workerParams: WorkerParameters) : Worker(appContext, workerParams) {
 
@@ -30,7 +29,7 @@ class FeedGroupsWorker(appContext: Context, workerParams: WorkerParameters) : Wo
             }
         }
 
-        Persistencia.setArrayArtigos(arrayArtigos, Calendar.getInstance().timeInMillis)
+        Persistencia.updateArtigos(arrayArtigos)
 
         if (Persistencia.notificacao)
             NotificacoesUtil.enviarNotificacao(applicationContext)

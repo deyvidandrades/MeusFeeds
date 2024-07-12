@@ -2,7 +2,6 @@ package com.deyvidandrades.meusfeeds.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -12,11 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.deyvidandrades.meusfeeds.R
 import com.deyvidandrades.meusfeeds.adaptadoes.AdaptadorFeedGroup
 import com.deyvidandrades.meusfeeds.assistentes.Persistencia
-import com.deyvidandrades.meusfeeds.assistentes.RequestManager
-import com.deyvidandrades.meusfeeds.assistentes.RssParser
 import com.deyvidandrades.meusfeeds.interfaces.OnItemClickListener
 import com.deyvidandrades.meusfeeds.objetos.FeedGroup
-import java.net.URL
 
 class CarregarDadosActivity : AppCompatActivity(), OnItemClickListener {
     private val arrayFeedsGroups = ArrayList<FeedGroup>()
@@ -42,9 +38,6 @@ class CarregarDadosActivity : AppCompatActivity(), OnItemClickListener {
         recyclerHabitos.adapter = adaptadorFeedGroup
         recyclerHabitos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        //val url = intent.getStringExtra("url")
-
-
         btnVoltar.setOnClickListener {
             finish()
         }
@@ -58,7 +51,6 @@ class CarregarDadosActivity : AppCompatActivity(), OnItemClickListener {
             Toast.makeText(this, "Info", Toast.LENGTH_SHORT).show()
         }
 
-        //carregarFuncaoAssincrona(URL(url))
         if (Persistencia.LISTA_FEED_GROUPS != null)
             carregarFeedGroups(Persistencia.LISTA_FEED_GROUPS!!)
     }
@@ -68,26 +60,6 @@ class CarregarDadosActivity : AppCompatActivity(), OnItemClickListener {
         arrayFeedsGroups.clear()
         arrayFeedsGroups.addAll(array)
         adaptadorFeedGroup.notifyDataSetChanged()
-    }
-
-    private fun carregarFuncaoAssincrona(url: URL) {
-        loading.visibility = View.VISIBLE
-        kotlinx.coroutines.runBlocking {
-
-            val array = ArrayList<FeedGroup>()
-            val result = RequestManager.fazerRequisicao(url)
-
-            if (result != "") {
-                RssParser.getFeedGroups(result) {
-                    array.addAll(it)
-                }
-
-                array.sortByDescending { it.score }
-                carregarFeedGroups(array)
-            }
-        }
-
-        loading.visibility = View.GONE
     }
 
     override fun onItemClicked(item: Any, remover: Boolean) {

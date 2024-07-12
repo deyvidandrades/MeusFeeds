@@ -15,10 +15,9 @@ import com.deyvidandrades.meusfeeds.objetos.Artigo
 import com.google.android.material.imageview.ShapeableImageView
 
 
-class AdaptadorPreviewArtigos(context: Context, arrayList: ArrayList<Artigo>, listener: OnItemClickListener) :
+class AdaptadorPreviewArtigos(private val context: Context, arrayList: ArrayList<Artigo>, listener: OnItemClickListener) :
     RecyclerView.Adapter<AdaptadorPreviewArtigos.ViewHolder>() {
 
-    private val context: Context
     private val listener: OnItemClickListener
     private var arrayList: ArrayList<Artigo> = ArrayList()
 
@@ -62,29 +61,17 @@ class AdaptadorPreviewArtigos(context: Context, arrayList: ArrayList<Artigo>, li
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var ivFeedGroupFavicon: ShapeableImageView
-        var tvFeedGroupTitulo: TextView
+        var ivFeedGroupFavicon: ShapeableImageView = itemView.findViewById(R.id.iv_feed_group_favicon)
+        var tvFeedGroupTitulo: TextView = itemView.findViewById(R.id.tv_feed_group_titulo)
 
-        var ivArtigoCapa: ShapeableImageView
-        var tvArtigoTitulo: TextView
-        var tvArtigoDescricao: TextView
-        var tvArtigoCategoria: TextView
-        var btnContinuarLendo: TextView
-
-        init {
-            ivFeedGroupFavicon = itemView.findViewById(R.id.iv_feed_group_favicon)
-            tvFeedGroupTitulo = itemView.findViewById(R.id.tv_feed_group_titulo)
-
-            ivArtigoCapa = itemView.findViewById(R.id.iv_artigo_capa)
-            tvArtigoTitulo = itemView.findViewById(R.id.tv_artigo_titulo)
-            tvArtigoDescricao = itemView.findViewById(R.id.tv_artigo_descricao)
-            tvArtigoCategoria = itemView.findViewById(R.id.tv_artigo_categoria)
-            btnContinuarLendo = itemView.findViewById(R.id.btn_continuar_lendo)
-        }
+        var ivArtigoCapa: ShapeableImageView = itemView.findViewById(R.id.iv_artigo_capa)
+        var tvArtigoTitulo: TextView = itemView.findViewById(R.id.tv_artigo_titulo)
+        var tvArtigoDescricao: TextView = itemView.findViewById(R.id.tv_artigo_descricao)
+        var tvArtigoCategoria: TextView = itemView.findViewById(R.id.tv_artigo_categoria)
+        var btnContinuarLendo: TextView = itemView.findViewById(R.id.btn_continuar_lendo)
     }
 
     init {
-        this.context = context
         this.arrayList = arrayList
         this.listener = listener
     }
