@@ -7,10 +7,7 @@ import com.google.gson.JsonParser
 object RssParser {
 
     fun getArrayArtigos(
-        feedGroup: FeedGroup,
-        dataRaw: String,
-        numMaximo: Int = 5,
-        listener: (ArrayList<Artigo>) -> Unit
+        feedGroup: FeedGroup, dataRaw: String, numMaximo: Int = 5, listener: (ArrayList<Artigo>) -> Unit
     ) {
         val regexItem = """.*?<item>(?<item>.+?)</item>.*?"""
         val matches = Regex(regexItem).findAll(dataRaw)
@@ -56,15 +53,12 @@ object RssParser {
             array.add(
                 FeedGroup(
                     item["title"].toString().replace("\"", ""),
-                    item["description"].toString().replace("\"", ""),
+                    item["description"].toString().replace("\"", "").replace("null", ""),
                     item["favicon"].toString().replace("\"", ""),
-                    item["is_podcast"].toString().replace("\"", "").toBoolean(),
                     item["item_count"].toString().replace("\"", "").toInt(),
                     item["last_updated"].toString().replace("\"", ""),
+                    item["url"].toString().replace("\"", ""),
                     item["score"].toString().replace("\"", "").toInt(),
-                    item["site_name"].toString().replace("\"", ""),
-                    item["site_url"].toString().replace("\"", ""),
-                    item["url"].toString().replace("\"", "")
                 )
             )
         }
