@@ -16,6 +16,7 @@ import android.widget.LinearLayout
 import android.widget.ListPopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -23,6 +24,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.deyvidandrades.meusfeeds.R
 import com.deyvidandrades.meusfeeds.adaptadoes.AdaptadorPreviewArtigos
 import com.deyvidandrades.meusfeeds.assistentes.NotificacoesUtil
@@ -34,6 +36,7 @@ import com.deyvidandrades.meusfeeds.dialogos.DialogoAdicionarFeedGroup
 import com.deyvidandrades.meusfeeds.dialogos.DialogoConfigurarNotificacoes
 import com.deyvidandrades.meusfeeds.interfaces.OnItemClickListener
 import com.deyvidandrades.meusfeeds.objetos.Artigo
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -44,7 +47,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     private val arrayArtigos = ArrayList<Artigo>()
 
     private lateinit var adaptadorPreviewArtigos: AdaptadorPreviewArtigos
-    private lateinit var loading: RelativeLayout
+    private lateinit var progress: LinearProgressIndicator
+    //private lateinit var loading: RelativeLayout
 
     private var categoriaSelecionada: String = ""
 
@@ -57,8 +61,10 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        enableEdgeToEdge()
 
-        loading = findViewById(R.id.loading)
+        //loading = findViewById(R.id.loading)
+        progress = findViewById(R.id.progress_indicator)
         btnEscolherCategorias = findViewById(R.id.btn_filtro)
         reMenu = findViewById(R.id.re_menu)
         liNenhumArtigo = findViewById(R.id.li_nenhum_item)
@@ -66,11 +72,11 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         listPopupWindow = ListPopupWindow(this, null)
 
         val btnAdicionar: Button = findViewById(R.id.btn_add)
-        val btnReload: Button = findViewById(R.id.btn_reload)
         val btnOpcoes: Button = findViewById(R.id.btn_opcoes)
         val btnNotificacoes: Button = findViewById(R.id.btn_notificacoes)
 
         val btnGerenciarFeeds: Button = findViewById(R.id.btn_gerenciar_feeds)
+        val btnReload: Button = findViewById(R.id.btn_atualizar_feeds)
         val btnTemaEscuro: Button = findViewById(R.id.btn_mudar_tema)
         val btnTermos: Button = findViewById(R.id.btn_termos)
         val tvVersao: TextView = findViewById(R.id.tv_versao)
@@ -88,7 +94,13 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
         //Recycler artigo
         val recyclerHabitos: RecyclerView = findViewById(R.id.recycler_artigos)
+        val swipeRefreshLayout: SwipeRefreshLayout = findViewById(R.id.swipe_refresh)
         adaptadorPreviewArtigos = AdaptadorPreviewArtigos(this, arrayArtigos, this)
+
+        swipeRefreshLayout.setOnRefreshListener {
+            recarregarArtigos()
+            swipeRefreshLayout.isRefreshing = false
+        }
 
         recyclerHabitos.setHasFixedSize(true)
         recyclerHabitos.adapter = adaptadorPreviewArtigos
@@ -134,8 +146,6 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         reMenu.setOnClickListener {
             carregarMenu()
         }
-
-        loading.visibility = View.VISIBLE
 
         mudarTema()
         carregarFiltros()
@@ -227,7 +237,6 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         listPopupWindow.setAdapter(adapter)
 
         listPopupWindow.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
-            loading.visibility = View.VISIBLE
             btnEscolherCategorias.text = ((view) as TextView).text.toString()
             categoriaSelecionada = items[position]
             listPopupWindow.dismiss()
@@ -257,14 +266,12 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         adaptadorPreviewArtigos.notifyDataSetChanged()
 
         liNenhumArtigo.visibility = if (arrayArtigos.isEmpty()) View.VISIBLE else View.GONE
-
-        loading.visibility = View.GONE
     }
 
     @SuppressLint("SetTextI18n")
     private fun recarregarArtigos() {
+        progress.visibility = View.VISIBLE
         lifecycleScope.launch(Dispatchers.IO) {
-            loading.visibility = View.GONE
             val arrayUpdate = ArrayList<Artigo>()
             for (feedGroup in Persistencia.getFeedGroups()) {
                 runBlocking {
@@ -281,9 +288,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             arrayUpdate.sortBy { it.data }
             Persistencia.updateArtigos(arrayUpdate)
 
-            loading.visibility = View.GONE
-
             withContext(Dispatchers.Main) {
+                progress.visibility = View.GONE
                 carregarArtigos()
             }
         }

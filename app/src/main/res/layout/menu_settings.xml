@@ -5,9 +5,9 @@
     android:id="@+id/re_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="gone"
     android:background="@color/transparente"
-    android:elevation="4dp"
-    android:visibility="gone">
+    android:elevation="4dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -30,6 +30,16 @@
             app:iconPadding="8dp" />
 
         <include layout="@layout/separador_m0" />
+
+        <Button
+            android:id="@+id/btn_atualizar_feeds"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/atualizar_feeds"
+            android:textAlignment="textStart"
+            app:icon="@drawable/round_refresh_24"
+            app:iconPadding="8dp" />
 
         <Button
             android:id="@+id/btn_notificacoes"

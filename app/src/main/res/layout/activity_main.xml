@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingVertical="16dp"
     tools:context=".activities.MainActivity">
 
     <include layout="@layout/cartao_loading" />
@@ -11,6 +12,15 @@
     <include
         android:id="@+id/barra"
         layout="@layout/barra_main" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_indicator"
+        android:layout_below="@+id/barra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:indicatorColor="?android:colorAccent" />
 
     <LinearLayout
         android:id="@+id/li_nenhum_item"
@@ -42,11 +52,19 @@
             app:drawableTopCompat="@drawable/round_info_outline_24" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_artigos"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/barra" />
+        android:layout_below="@+id/barra">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_artigos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include layout="@layout/menu_settings" />
 
