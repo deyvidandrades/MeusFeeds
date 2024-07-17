@@ -34,99 +34,91 @@ object NotificacoesUtil {
     fun enviarNotificacao(context: Context) {
         Persistencia.getInstance(context)
 
-            val artigos = Persistencia.getArtigos()
-            artigos.shuffle()
+        val artigos = Persistencia.getArtigos()
+        artigos.shuffle()
 
-            val artigo = artigos[0]
+        val artigo = artigos[0]
 
-            //ACAO DE CONTINUAR LENDO
-            val intentContinuarLendo = Intent(context, ArtigoActivityNotificacao::class.java)
-            intentContinuarLendo.putExtra("artigo", Gson().toJson(artigo))
+        //ACAO DE CONTINUAR LENDO
+        val intentContinuarLendo = Intent(context, ArtigoActivityNotificacao::class.java)
+        intentContinuarLendo.putExtra("artigo", Gson().toJson(artigo))
 
-            Persistencia.ARTIGO_ATUAL = artigo
-            val pendingIntentContinuarLendo = PendingIntent.getActivity(
-                context,
-                0,
-                intentContinuarLendo,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
+        Persistencia.ARTIGO_ATUAL = artigo
+        val pendingIntentContinuarLendo = PendingIntent.getActivity(
+            context,
+            0,
+            intentContinuarLendo,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
 
-            val actionContinuarLendo: NotificationCompat.Action = NotificationCompat.Action.Builder(
-                R.drawable.round_arrow_outward_24,
-                context.getString(R.string.continuar_lendo),
-                pendingIntentContinuarLendo
-            ).build()
+        val actionContinuarLendo: NotificationCompat.Action = NotificationCompat.Action.Builder(
+            R.drawable.round_arrow_outward_24,
+            context.getString(R.string.continuar_lendo),
+            pendingIntentContinuarLendo
+        ).build()
 
-            //ACAO DE VER MAIS ARTIGOS
-            val intentMaisArtigos = Intent(context, MainActivity::class.java)
+        //ACAO DE VER MAIS ARTIGOS
+        val intentMaisArtigos = Intent(context, MainActivity::class.java)
 
-            val pendingIntentMaisArtigos = PendingIntent.getActivity(
-                context,
-                0,
-                intentMaisArtigos,
-                PendingIntent.FLAG_IMMUTABLE
-            )
+        val pendingIntentMaisArtigos = PendingIntent.getActivity(
+            context,
+            0,
+            intentMaisArtigos,
+            PendingIntent.FLAG_IMMUTABLE
+        )
 
-            val actionMaisArtigos: NotificationCompat.Action = NotificationCompat.Action.Builder(
-                R.drawable.round_rss_feed_24,
-                context.getString(R.string.mais_artigos),
-                pendingIntentMaisArtigos
-            ).build()
+        val actionMaisArtigos: NotificationCompat.Action = NotificationCompat.Action.Builder(
+            R.drawable.round_rss_feed_24,
+            context.getString(R.string.mais_artigos),
+            pendingIntentMaisArtigos
+        ).build()
 
-            RequestManager.carregarImagem(context, artigo.imagem) { bitmap ->
-                //CRIANDO A NOTIFICACAO
-                val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                    .setAutoCancel(true)
-                    .setColorized(true)
-                    .setShowWhen(true)
-                    .setColor(context.getColor(R.color.accent))
-                    .setCategory(Notification.CATEGORY_MESSAGE)
-                    .setContentTitle(Html.fromHtml(artigo.titulo, Html.FROM_HTML_MODE_COMPACT))
-                    .setContentText(
-                        Html.fromHtml(
-                            Html.fromHtml(
-                                artigo.descricao,
-                                Html.FROM_HTML_MODE_COMPACT
-                            ).toString(),
-                            Html.FROM_HTML_MODE_COMPACT
-                        )
+        RequestManager.carregarImagem(context, artigo.imagem) { bitmap ->
+            //CRIANDO A NOTIFICACAO
+            val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+                .setAutoCancel(true)
+                .setColorized(true)
+                .setShowWhen(true)
+                .setColor(context.getColor(R.color.accent))
+                .setCategory(Notification.CATEGORY_MESSAGE)
+                .setContentTitle(artigo.feedGroup.titulo)
+                .setContentText(Html.fromHtml(artigo.titulo, Html.FROM_HTML_MODE_COMPACT))
+                .setSubText(context.getString(R.string.notificacao_novo_artigo))
+                .setSmallIcon(R.drawable.rounded_space_dashboard_24)
+                .setContentIntent(
+                    PendingIntent.getActivity(
+                        context,
+                        0,
+                        Intent(context, MainActivity::class.java).apply {
+                            //flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            // flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        },
+                        PendingIntent.FLAG_IMMUTABLE
                     )
-                    .setSubText(context.getString(R.string.notificacao_novo_artigo))
-                    .setSmallIcon(R.drawable.rounded_space_dashboard_24)
-                    .setContentIntent(
-                        PendingIntent.getActivity(
-                            context,
-                            0,
-                            Intent(context, MainActivity::class.java).apply {
-                                //flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                // flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            },
-                            PendingIntent.FLAG_IMMUTABLE
-                        )
+                )
+                .addAction(actionContinuarLendo)
+                .addAction(actionMaisArtigos)
+
+            if (bitmap != null) {
+                builder
+                    .setLargeIcon(bitmap)
+                    .setStyle(
+                        NotificationCompat.BigPictureStyle()
+                            .bigPicture(bitmap)
                     )
-                    .addAction(actionContinuarLendo)
-                    .addAction(actionMaisArtigos)
-
-                if (bitmap != null) {
-                    builder
-                        .setLargeIcon(bitmap)
-                        .setStyle(
-                            NotificationCompat.BigPictureStyle()
-                                .bigPicture(bitmap)
-                        )
-                }
-
-                with(NotificationManagerCompat.from(context)) {
-                    if (ActivityCompat.checkSelfPermission(
-                            context,
-                            Manifest.permission.POST_NOTIFICATIONS
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        return@carregarImagem
-                    }
-                    notify(NOTIFICATION_ID, builder.build())
-                }
             }
+
+            with(NotificationManagerCompat.from(context)) {
+                if (ActivityCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return@carregarImagem
+                }
+                notify(NOTIFICATION_ID, builder.build())
+            }
+        }
 
     }
 
