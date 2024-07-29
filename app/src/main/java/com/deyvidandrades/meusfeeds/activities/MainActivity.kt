@@ -278,14 +278,14 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
                     val result = RequestManager.fazerRequisicao(URL(feedGroup.url))
 
                     if (result != "") {
-                        RssParser.getArrayArtigos(feedGroup, result, 10) {
+                        RssParser.getArrayArtigos(feedGroup, result) {
                             arrayUpdate.addAll(it)
                         }
                     }
                 }
             }
 
-            arrayUpdate.sortBy { it.data }
+            arrayUpdate.sortBy { it.getDataMilli() }
             Persistencia.updateArtigos(arrayUpdate)
 
             withContext(Dispatchers.Main) {

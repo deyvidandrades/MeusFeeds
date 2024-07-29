@@ -38,6 +38,8 @@ class AdaptadorFeedGroup(private val context: Context, arrayList: ArrayList<Feed
         holder.tvFeedGroupTitulo.text = feedGroup.titulo
         holder.tvFeedGroupDescricao.text = feedGroup.descricao
         holder.tvFeedGroupCount.text = "${feedGroup.itemCount} artigos."
+        holder.tvFeedGroupLink.text = feedGroup.url
+        holder.tvLastUpdate.text = feedGroup.getDataFormatada().replaceFirstChar { it.uppercase() }
 
         holder.btnAdicionarFeedGroup.visibility = if (feedGroup.adicionado) View.GONE else View.VISIBLE
         holder.btnRemoverFeedGroup.visibility = if (feedGroup.adicionado) View.VISIBLE else View.GONE
@@ -63,6 +65,8 @@ class AdaptadorFeedGroup(private val context: Context, arrayList: ArrayList<Feed
         var tvFeedGroupCount: TextView = itemView.findViewById(R.id.id_feed_group_item_count)
         var btnAdicionarFeedGroup: Button = itemView.findViewById(R.id.btn_adicionar_feed_group)
         var btnRemoverFeedGroup: Button = itemView.findViewById(R.id.btn_remover_feed_group)
+        val tvFeedGroupLink: TextView = itemView.findViewById(R.id.id_feed_group_link)
+        val tvLastUpdate: TextView = itemView.findViewById(R.id.id_feed_group_last_update)
     }
 
     init {

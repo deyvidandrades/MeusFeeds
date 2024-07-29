@@ -24,18 +24,22 @@ object RssParser {
                 val categoria = Regex("""<category>(.+?)</category>""").find(matchResult.value)
                 val imagem = Regex("""<media:content url="(.+?)"""").find(matchResult.value)
 
-                val artigo = Artigo(
-                    (titulo?.value ?: "").replace("<title>", "").replace("</title>", ""),
-                    (conteudo?.value ?: "").replace("<content:encoded>", "").replace("</content:encoded>", ""),
-                    (descricao?.value ?: "").replace("<description>", "").replace("</description>", ""),
-                    feedGroup,
-                    (data?.value ?: "").replace("<pubDate>", "").replace("</pubDate>", ""),
-                    (imagem?.value ?: "").replace("<media:content url=\"", "").replace("\"", ""),
-                    (categoria?.value ?: "").replace("<category>", "").replace("</category>", "")
-                )
+                val tituloProcessado = (titulo?.value ?: "").replace("<title>", "").replace("</title>", "")
 
-                arrayList.add(artigo)
-                index -= 1
+                if (tituloProcessado != feedGroup.titulo) {
+                    val artigo = Artigo(
+                        if (tituloProcessado.contains("-")) tituloProcessado.split("-")[0] else tituloProcessado,
+                        (conteudo?.value ?: "").replace("<content:encoded>", "").replace("</content:encoded>", ""),
+                        (descricao?.value ?: "").replace("<description>", "").replace("</description>", ""),
+                        feedGroup,
+                        (data?.value ?: "").replace("<pubDate>", "").replace("</pubDate>", ""),
+                        (imagem?.value ?: "").replace("<media:content url=\"", "").replace("\"", ""),
+                        (categoria?.value ?: "").replace("<category>", "").replace("</category>", "")
+                    )
+
+                    arrayList.add(artigo)
+                    index -= 1
+                }
             }
         }
 

@@ -15,7 +15,11 @@ import com.deyvidandrades.meusfeeds.objetos.Artigo
 import com.google.android.material.imageview.ShapeableImageView
 
 
-class AdaptadorPreviewArtigos(private val context: Context, arrayList: ArrayList<Artigo>, listener: OnItemClickListener) :
+class AdaptadorPreviewArtigos(
+    private val context: Context,
+    arrayList: ArrayList<Artigo>,
+    listener: OnItemClickListener
+) :
     RecyclerView.Adapter<AdaptadorPreviewArtigos.ViewHolder>() {
 
     private val listener: OnItemClickListener

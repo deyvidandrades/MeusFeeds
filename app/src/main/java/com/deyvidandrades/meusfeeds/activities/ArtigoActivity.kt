@@ -36,7 +36,7 @@ class ArtigoActivity : AppCompatActivity() {
             val ivArtigoCapa: ShapeableImageView = findViewById(R.id.iv_artigo_capa)
 
             tvFeedGroupTitulo.text = artigo.feedGroup.titulo
-            tvArtigoData.text = Html.fromHtml(artigo.data, Html.FROM_HTML_MODE_COMPACT)
+            tvArtigoData.text = artigo.getDataFormatada().replaceFirstChar { it.uppercase() }
             tvArtigoTitulo.text = Html.fromHtml(artigo.titulo, Html.FROM_HTML_MODE_COMPACT)
             tvArtigoDescricao.text = Html.fromHtml(
                 Html.fromHtml(artigo.descricao, Html.FROM_HTML_MODE_COMPACT).toString(), Html.FROM_HTML_MODE_COMPACT

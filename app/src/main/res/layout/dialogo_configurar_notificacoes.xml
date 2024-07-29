@@ -23,9 +23,9 @@
             android:id="@+id/switch_notificacoes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
             android:background="@drawable/rounded_r16_outline"
             android:checked="true"
+            android:paddingHorizontal="16dp"
             android:text="@string/notificacoes" />
 
         <TextView

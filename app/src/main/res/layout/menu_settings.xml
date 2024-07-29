@@ -5,9 +5,9 @@
     android:id="@+id/re_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="gone"
     android:background="@color/transparente"
-    android:elevation="4dp">
+    android:elevation="4dp"
+    android:visibility="gone">
 
     <LinearLayout
         android:layout_width="wrap_content"
