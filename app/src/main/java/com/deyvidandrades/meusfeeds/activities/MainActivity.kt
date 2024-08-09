@@ -261,7 +261,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
                 if (item.feedGroup.titulo == filtro)
                     arrayArtigos.add(item)
 
-        arrayArtigos.sortBy { it.data }
+        arrayArtigos.sortByDescending { it.data }
 
         adaptadorPreviewArtigos.notifyDataSetChanged()
 
@@ -285,7 +285,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
                 }
             }
 
-            arrayUpdate.sortBy { it.getDataMilli() }
+            arrayUpdate.sortByDescending { it.getDataMilli() }
             Persistencia.updateArtigos(arrayUpdate)
 
             withContext(Dispatchers.Main) {
