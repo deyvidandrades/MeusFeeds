@@ -27,45 +27,40 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/tv_artigo_data"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_artigo_capa"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/data"
-                    android:textSize="12sp" />
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearance="@style/rounded_16" />
 
                 <TextView
                     android:id="@+id/tv_artigo_titulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginTop="16dp"
                     android:text="@string/titulo"
-                    android:textSize="32sp" />
-
-                <TextView
-                    android:id="@+id/tv_artigo_categoria"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/rounded_r16_outline"
-                    android:padding="8dp"
-                    android:text="@string/categoria"
-                    android:textSize="12sp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/tv_artigo_descricao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="@string/descricao"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/iv_artigo_capa"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                <TextView
+                    android:id="@+id/tv_artigo_categoria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:scaleType="centerCrop"
-                    app:shapeAppearance="@style/rounded_16" />
+                    android:background="@drawable/rounded_r16_outline"
+                    android:paddingVertical="8dp"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/categoria"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_artigo_conteudo"

@@ -35,4 +35,5 @@
     <string name="salvar_e_fechar">Salvar e Fechar</string>
     <string name="falha_ao_encontrar_feed">Falha ao encontrar feed</string>
     <string name="atualizar_feeds">Atualizar</string>
+    <string name="traco">-</string>
 </resources>
