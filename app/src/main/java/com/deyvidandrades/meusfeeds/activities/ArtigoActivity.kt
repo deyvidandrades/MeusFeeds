@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import com.deyvidandrades.meusfeeds.R
+import com.deyvidandrades.meusfeeds.assistentes.DataUtil
 import com.deyvidandrades.meusfeeds.assistentes.Persistencia
 import com.deyvidandrades.meusfeeds.assistentes.RequestManager
 import com.google.android.material.imageview.ShapeableImageView
@@ -36,7 +37,7 @@ class ArtigoActivity : AppCompatActivity() {
             val ivArtigoCapa: ShapeableImageView = findViewById(R.id.iv_artigo_capa)
 
             tvFeedGroupTitulo.text = artigo.feedGroup.titulo
-            tvArtigoData.text = artigo.getDataFormatada().replaceFirstChar { it.uppercase() }
+            tvArtigoData.text = DataUtil.getDataFormatada(artigo.getDataMilli())
             tvArtigoTitulo.text = Html.fromHtml(artigo.titulo, Html.FROM_HTML_MODE_COMPACT)
             tvArtigoDescricao.text = Html.fromHtml(
                 Html.fromHtml(artigo.descricao, Html.FROM_HTML_MODE_COMPACT).toString(), Html.FROM_HTML_MODE_COMPACT

@@ -55,13 +55,6 @@ data class Artigo(
         return milli
     }
 
-    fun getDataFormatada(): String {
-        val instant = Instant.ofEpochMilli(getDataMilli())
-        val zonedDateTime = instant.atZone(ZoneId.systemDefault())
-        val formatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy, HH:mm", Locale.getDefault())
-        return zonedDateTime.format(formatter)
-    }
-
     override fun compareTo(other: Artigo): Int {
         return getDataMilli().compareTo(other.getDataMilli())
     }

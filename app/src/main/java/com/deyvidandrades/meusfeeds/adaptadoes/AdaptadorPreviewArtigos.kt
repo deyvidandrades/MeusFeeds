@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.deyvidandrades.meusfeeds.R
+import com.deyvidandrades.meusfeeds.assistentes.DataUtil
 import com.deyvidandrades.meusfeeds.assistentes.RequestManager
 import com.deyvidandrades.meusfeeds.interfaces.OnItemClickListener
 import com.deyvidandrades.meusfeeds.objetos.Artigo
@@ -43,9 +44,9 @@ class AdaptadorPreviewArtigos(
         ).toString()
 
         holder.tvArtigoTitulo.text = Html.fromHtml(artigo.titulo, Html.FROM_HTML_MODE_COMPACT)
-        holder.tvArtigoDescricao.text = artigo.getDataFormatada()
+        holder.tvArtigoDescricao.text = DataUtil.getDataFormatada(artigo.getDataMilli())
         //if (descricao.length > 120) descricao.substring(0, 120) + "..." else descricao
-        holder.tvArtigoCategoria.text = Html.fromHtml(artigo.categoria, Html.FROM_HTML_MODE_COMPACT)
+        holder.tvArtigoCategoria.text = " - ${Html.fromHtml(artigo.categoria, Html.FROM_HTML_MODE_COMPACT)}"
         holder.btnContinuarLendo.setOnClickListener {
 
             //Persistencia.ARTIGO_ATUAL = artigo

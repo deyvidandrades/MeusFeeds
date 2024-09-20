@@ -261,8 +261,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
                 if (item.feedGroup.titulo == filtro)
                     arrayArtigos.add(item)
 
-        arrayArtigos.sortByDescending { it.data }
-
+        arrayArtigos.sortByDescending { it.getDataMilli() }
         adaptadorPreviewArtigos.notifyDataSetChanged()
 
         liNenhumArtigo.visibility = if (arrayArtigos.isEmpty()) View.VISIBLE else View.GONE
