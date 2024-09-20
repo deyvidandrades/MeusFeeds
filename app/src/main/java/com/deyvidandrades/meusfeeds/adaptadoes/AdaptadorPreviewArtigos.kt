@@ -43,7 +43,8 @@ class AdaptadorPreviewArtigos(
         ).toString()
 
         holder.tvArtigoTitulo.text = Html.fromHtml(artigo.titulo, Html.FROM_HTML_MODE_COMPACT)
-        holder.tvArtigoDescricao.text = if (descricao.length > 120) descricao.substring(0, 120) + "..." else descricao
+        holder.tvArtigoDescricao.text = artigo.getDataFormatada()
+        //if (descricao.length > 120) descricao.substring(0, 120) + "..." else descricao
         holder.tvArtigoCategoria.text = Html.fromHtml(artigo.categoria, Html.FROM_HTML_MODE_COMPACT)
         holder.btnContinuarLendo.setOnClickListener {
 
@@ -58,6 +59,8 @@ class AdaptadorPreviewArtigos(
 
         RequestManager.carregarImagem(context, holder.ivFeedGroupFavicon, artigo.feedGroup.favicon)
         RequestManager.carregarImagem(context, holder.ivArtigoCapa, artigo.imagem)
+
+        holder.ivArtigoCapa.visibility = if (artigo.imagem != "") View.VISIBLE else View.GONE
     }
 
     override fun getItemCount(): Int {
