@@ -23,10 +23,19 @@ object RssParser {
                 val conteudo = Regex("""<content:encoded>(.+?)</content:encoded>""").find(matchResult.value)
                 val categoria = Regex("""<category>(.+?)</category>""").find(matchResult.value)
 
-                var imagem = Regex("""url="(.+?.jpg)|url="(.+?.jpeg)""").find(matchResult.value)
+                var imagem = Regex("""media:thumbnail url="(.+?)".*?""").find(matchResult.value)?.value?.replace(
+                    "media:thumbnail url=", ""
+                ) ?: ""
 
-                if ((imagem?.value ?: "") == "")
-                    imagem = Regex("""src="(.+?.jpg)|src="(.+?.jpeg)""").find(matchResult.value)
+                if (imagem == "")
+                    imagem = Regex("""url="(.+?.jpg)|url="(.+?.jpeg)""").find(matchResult.value)?.value?.replace(
+                        "url=\"", ""
+                    ) ?: ""
+
+                if (imagem == "")
+                    imagem = Regex("""src="(.+?.jpg)|src="(.+?.jpeg)""").find(matchResult.value)?.value?.replace(
+                        "src=\"", ""
+                    ) ?: ""
 
                 val tituloProcessado = (titulo?.value ?: "").replace("<title>", "").replace("</title>", "")
 
@@ -37,7 +46,7 @@ object RssParser {
                         (descricao?.value ?: "").replace("<description>", "").replace("</description>", ""),
                         feedGroup,
                         (data?.value ?: "").replace("<pubDate>", "").replace("</pubDate>", ""),
-                        (imagem?.value ?: "").replace("src=\"", "").replace("url=\"", ""),
+                        imagem.replace("\"", ""),
                         (categoria?.value ?: "").replace("<category>", "").replace("</category>", "")
                     )
 
