@@ -11,8 +11,8 @@ android {
         applicationId = "com.deyvidandrades.meusfeeds"
         minSdk = 31
         targetSdk = 34
-        versionCode = 11
-        versionName = "1.0.11"
+        versionCode = 12
+        versionName = "1.0.12"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -47,8 +47,8 @@ dependencies {
 
     //Outras bibliotecas
     implementation("com.google.code.gson:gson:2.11.0")
-    implementation("com.google.android.play:review:2.0.1")
-    implementation("com.google.android.play:review-ktx:2.0.1")
+    implementation("com.google.android.play:review:2.0.2")
+    implementation("com.google.android.play:review-ktx:2.0.2")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("androidx.work:work-runtime-ktx:2.9.1")
 
