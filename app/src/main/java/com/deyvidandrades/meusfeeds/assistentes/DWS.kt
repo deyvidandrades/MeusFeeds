@@ -1,7 +1,7 @@
 package com.deyvidandrades.meusfeeds.assistentes
 
 object DWS {
-    fun getDados(dados: String) {
+    fun getDados(dados: Any) {
         println("DWS.D.$dados")
     }
 }
