@@ -5,57 +5,59 @@ import com.deyvidandrades.meusfeeds.objetos.FeedGroup
 import com.google.gson.JsonParser
 
 object RssParser {
-
     fun getArrayArtigos(
-        feedGroup: FeedGroup, dataRaw: String, numMaximo: Int = 5, listener: (ArrayList<Artigo>) -> Unit
+        feedGroup: FeedGroup,
+        dataRaw: String,
+        numMaximo: Int = 5,
+        listener: (ArrayList<Artigo>) -> Unit
     ) {
-        val regexItem = """.*?<item>(?<item>.+?)</item>.*?"""
-        val matches = Regex(regexItem).findAll(dataRaw)
+        val matches = Regex("""<item>(.+?)</item>""", RegexOption.DOT_MATCHES_ALL).findAll(dataRaw)
 
-        var index = numMaximo
         val arrayList = ArrayList<Artigo>()
-        matches.forEach { matchResult ->
-            if (index >= 1) {
+        var index = numMaximo
 
-                val titulo = Regex("""<title>(.+?)</title>""").find(matchResult.value)
-                val data = Regex("""<pubDate>(.+?)</pubDate>""").find(matchResult.value)
-                val descricao = Regex("""<description>(.+?)</description>""").find(matchResult.value)
-                val conteudo = Regex("""<content:encoded>(.+?)</content:encoded>""").find(matchResult.value)
-                val categoria = Regex("""<category>(.+?)</category>""").find(matchResult.value)
+        matches.forEach { match ->
+            if (index >= 0) {
+                val article = match.value
 
-                var imagem = Regex("""media:thumbnail url="(.+?)".*?""").find(matchResult.value)?.value?.replace(
-                    "media:thumbnail url=", ""
-                ) ?: ""
+                val titulo = Regex("""<title>(.+?)</title>""", RegexOption.DOT_MATCHES_ALL).find(article)
+                val data = Regex("""<pubDate>(.+?)</pubDate>""", RegexOption.DOT_MATCHES_ALL).find(article)
+                val descricao = Regex("""<description>(.+?)</description>""", RegexOption.DOT_MATCHES_ALL).find(article)
+                val conteudo =
+                    Regex("""<content:encoded>(.+?)</content:encoded>""", RegexOption.DOT_MATCHES_ALL).find(article)
 
-                if (imagem == "")
-                    imagem = Regex("""url="(.+?.jpg)|url="(.+?.jpeg)""").find(matchResult.value)?.value?.replace(
-                        "url=\"", ""
-                    ) ?: ""
+                val thumbnails = Regex("""<media:thumbnail.*?url="(.+?)".*?/>""", RegexOption.DOT_MATCHES_ALL)
+                    .findAll(article).map { it.groupValues[1] }.toCollection(ArrayList())
 
-                if (imagem == "")
-                    imagem = Regex("""src="(.+?.jpg)|src="(.+?.jpeg)""").find(matchResult.value)?.value?.replace(
-                        "src=\"", ""
-                    ) ?: ""
+                val contentImages =
+                    Regex("""<media:content.*?url="(.+?)".*?/.*?>""", RegexOption.DOT_MATCHES_ALL)
+                        .findAll(article).map { it.groupValues[1] }.toCollection(ArrayList())
 
-                val tituloProcessado = (titulo?.value ?: "").replace("<title>", "").replace("</title>", "")
+                val categories = Regex("""<category>(.+?)</category>""", RegexOption.DOT_MATCHES_ALL)
+                    .findAll(article).map { it.groupValues[1] }.toCollection(ArrayList())
 
-                if (tituloProcessado != feedGroup.titulo) {
-                    val artigo = Artigo(
-                        if (tituloProcessado.contains("-")) tituloProcessado.split("-")[0] else tituloProcessado,
-                        (conteudo?.value ?: "").replace("<content:encoded>", "").replace("</content:encoded>", ""),
-                        (descricao?.value ?: "").replace("<description>", "").replace("</description>", ""),
-                        feedGroup,
-                        (data?.value ?: "").replace("<pubDate>", "").replace("</pubDate>", ""),
-                        imagem.replace("\"", ""),
-                        (categoria?.value ?: "").replace("<category>", "").replace("</category>", "")
+                val arrayImages = ArrayList<String>()
+                arrayImages.addAll(thumbnails)
+                arrayImages.addAll(contentImages)
+                arrayImages.add("")
+
+                try {
+                    arrayList.add(
+                        Artigo(
+                            if (titulo != null) titulo.groupValues[1] else "",
+                            if (conteudo != null) conteudo.groupValues[1] else "",
+                            if (descricao != null) descricao.groupValues[1] else "",
+                            feedGroup,
+                            if (data != null) data.groupValues[1] else "",
+                            if (arrayImages.isEmpty()) "" else arrayImages[0],
+                            if (categories.isEmpty()) "" else categories.first().toString()
+                        )
                     )
-
-                    arrayList.add(artigo)
-                    index -= 1
+                } catch (_: Exception) {
                 }
             }
+            index--
         }
-
         listener.invoke(arrayList)
     }
 
