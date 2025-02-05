@@ -12,8 +12,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.coroutines.resume
@@ -22,34 +20,12 @@ import kotlin.coroutines.suspendCoroutine
 object RequestManager {
 
     suspend fun fazerRequisicao(url: URL): String = withContext(Dispatchers.IO) {
-
         suspendCoroutine { continuation ->
             try {
-                val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "GET"
-                connection.connectTimeout = 110000
-                connection.readTimeout = 110000
+                val connection = URL(url.toString()).openConnection() as HttpURLConnection
+                val result = connection.inputStream.bufferedReader().use { it.readText() }
 
-                // Disable chunked transfer encoding
-                connection.setChunkedStreamingMode(0)
-
-                if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-                    val inputStream = connection.inputStream
-                    val reader = BufferedReader(InputStreamReader(inputStream))
-                    val response = StringBuilder()
-
-                    var line: String?
-                    while (reader.readLine().also { line = it } != null) {
-                        response.append(line)
-                    }
-
-                    reader.close()
-                    connection.disconnect()
-
-                    continuation.resume(response.toString())
-                } else {
-                    continuation.resume("")
-                }
+                continuation.resume(result)
             } catch (_: Exception) {
                 continuation.resume("")
             }
