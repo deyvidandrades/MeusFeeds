@@ -3,6 +3,7 @@ package com.deyvidandrades.meusfeeds.assistentes
 import com.deyvidandrades.meusfeeds.objetos.Artigo
 import com.deyvidandrades.meusfeeds.objetos.FeedGroup
 import com.google.gson.JsonParser
+import java.net.URL
 
 object RssParser {
     fun getArrayArtigos(
@@ -30,7 +31,7 @@ object RssParser {
                     .findAll(article).map { it.groupValues[1] }.toCollection(ArrayList())
 
                 val contentImages =
-                    Regex("""<media:content.*?url="(.+?)".*?/.*?>""", RegexOption.DOT_MATCHES_ALL)
+                    Regex("""<media:content.*url="(.+?)"""", RegexOption.DOT_MATCHES_ALL)
                         .findAll(article).map { it.groupValues[1] }.toCollection(ArrayList())
 
                 val categories = Regex("""<category>(.+?)</category>""", RegexOption.DOT_MATCHES_ALL)
@@ -41,6 +42,15 @@ object RssParser {
                 arrayImages.addAll(contentImages)
                 arrayImages.add("")
 
+                val image = if (arrayImages[0].contains("${URL(feedGroup.url).host}/${URL(feedGroup.url).host}"))
+                    arrayImages[0].replace(
+                        "${URL(feedGroup.url).host}/${URL(feedGroup.url).host}",
+                        URL(feedGroup.url).host
+                    )
+                else
+                    arrayImages[0]
+                image.replace("?w=200","")
+
                 try {
                     arrayList.add(
                         Artigo(
@@ -49,7 +59,7 @@ object RssParser {
                             if (descricao != null) descricao.groupValues[1] else "",
                             feedGroup,
                             if (data != null) data.groupValues[1] else "",
-                            if (arrayImages.isEmpty()) "" else arrayImages[0],
+                            if (arrayImages.isEmpty()) "" else image,
                             if (categories.isEmpty()) "" else categories.first().toString()
                         )
                     )

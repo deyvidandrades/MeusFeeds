@@ -284,10 +284,10 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
                 }
             }
 
-            arrayUpdate.sortByDescending { it.getDataMilli() }
-            Persistencia.updateArtigos(arrayUpdate)
-
             withContext(Dispatchers.Main) {
+                arrayUpdate.sortByDescending { it.getDataMilli() }
+                Persistencia.updateArtigos(arrayUpdate)
+
                 progress.visibility = View.GONE
                 carregarArtigos()
             }
