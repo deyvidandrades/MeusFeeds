@@ -36,4 +36,6 @@
     <string name="salvar_e_fechar">Save and Close</string>
     <string name="falha_ao_encontrar_feed">Feed not found</string>
     <string name="atualizar_feeds">Update</string>
+    <string name="explore_seus">Explore Your</string>
+    <string name="feeds_favoritos">Favorite Feeds!</string>
 </resources>
