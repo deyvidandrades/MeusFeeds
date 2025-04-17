@@ -2,130 +2,182 @@ package com.deyvidandrades.meusfeeds.assistentes
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.deyvidandrades.meusfeeds.objetos.Artigo
-import com.deyvidandrades.meusfeeds.objetos.FeedGroup
+import android.text.Html
+import com.deyvidandrades.meusfeeds.dataclasses.AppData
+import com.deyvidandrades.meusfeeds.dataclasses.Artigo
+import com.deyvidandrades.meusfeeds.dataclasses.Fonte
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 object Persistencia {
     var ARTIGO_ATUAL: Artigo? = null
-    var LISTA_FEED_GROUPS: ArrayList<FeedGroup>? = null
-
-    var isFirstTime: Boolean = true
-    var isDarkTheme: Boolean = false
-    var notificacao: Boolean = true
-
+    var FONTE_ATUAL: Fonte? = null
     private var preferences: SharedPreferences? = null
+    private lateinit var appData: AppData
 
-    private var arrayFeedGroups = ArrayList<FeedGroup>()
-    private var arrayArtigos = ArrayList<Artigo>()
-
-    enum class Paths { FEED_GROUPS, ARTIGOS, IS_FIRST_TIME, IS_DARK_THEME, NOTIFICACOES }
-
-    fun getInstance(context: Context) {
+    /*INIT*/
+    fun init(context: Context) {
         preferences = context.getSharedPreferences("MAIN_DATA", Context.MODE_PRIVATE)
         carregarDados()
     }
 
+    private fun checkInit() {
+        if (preferences == null)
+            throw IllegalStateException("Persistencia.kt is not initialized. Call init() first.")
+    }
+
     /*FLUXO DADOS*/
-
     private fun carregarDados() {
-        if (preferences != null) {
-            val listaRawFeedGroups = preferences!!.getString(Paths.FEED_GROUPS.name.lowercase(), "")!!
-            val listaRawArtigos = preferences!!.getString(Paths.ARTIGOS.name.lowercase(), "")!!
+        checkInit()
 
-            isFirstTime = preferences!!.getBoolean(Paths.IS_FIRST_TIME.name.lowercase(), true)
-            isDarkTheme = preferences!!.getBoolean(Paths.IS_DARK_THEME.name.lowercase(), false)
-            notificacao = preferences!!.getBoolean(Paths.NOTIFICACOES.name.lowercase(), true)
-
-            val typeTokenFeedGroup = object : TypeToken<ArrayList<FeedGroup>>() {}.type
-            val typeTokenArtigos = object : TypeToken<ArrayList<Artigo>>() {}.type
-
-            try {
-                arrayFeedGroups.clear()
-                arrayFeedGroups.addAll(Gson().fromJson(listaRawFeedGroups, typeTokenFeedGroup))
-            } catch (e: NullPointerException) {
-                arrayFeedGroups = ArrayList()
-            }
-
-            try {
-                arrayArtigos.clear()
-                arrayArtigos.addAll(Gson().fromJson(listaRawArtigos, typeTokenArtigos))
-            } catch (e: NullPointerException) {
-                DWS.getDados(e.toString())
-                arrayArtigos = ArrayList()
-            }
-        }
+        val appDataRaw = preferences!!.getString("appData", "")
+        appData = if (appDataRaw != "") Gson().fromJson(appDataRaw, AppData::class.java) else AppData()
     }
 
     private fun salvarDados() {
-        if (preferences != null) {
-            with(preferences!!.edit()) {
-                putBoolean(Paths.IS_FIRST_TIME.name.lowercase(), isFirstTime)
-                putBoolean(Paths.IS_DARK_THEME.name.lowercase(), isDarkTheme)
-                putBoolean(Paths.NOTIFICACOES.name.lowercase(), notificacao)
+        checkInit()
 
-                putString(Paths.FEED_GROUPS.name.lowercase(), Gson().toJson(arrayFeedGroups))
-                putString(Paths.ARTIGOS.name.lowercase(), Gson().toJson(arrayArtigos))
-
-                commit()
-            }
-
-            carregarDados()
+        with(preferences!!.edit()) {
+            putString("appData", Gson().toJson(appData))
+            commit()
         }
+        carregarDados()
     }
 
     /*FLUXO SETTINGS*/
-    fun setFirstTime() {
-        isFirstTime = false
+    fun setFirstTime(value: Boolean) {
+        appData.firstTime = value
         salvarDados()
     }
 
-    fun setDarkTheme() {
-        isDarkTheme = !isDarkTheme
+    fun setDarkMode(value: Boolean) {
+        appData.darkTheme = value
         salvarDados()
     }
 
-    fun setNotificacoes() {
-        notificacao = !notificacao
+    fun setNotifications(value: Boolean) {
+        appData.notifications = value
         salvarDados()
     }
 
-    /*FLUXO FEED GROUPS*/
+    fun getNotifications() = appData.notifications
 
-    fun getFeedGroups(): ArrayList<FeedGroup> {
-        return arrayFeedGroups
+    fun getFirstTime() = appData.firstTime
+
+    fun getDarkMode() = appData.darkTheme
+
+    /* FLUXO FONTES */
+    fun getFontes() = appData.arrayFontes
+
+    fun getFontesActive(): ArrayList<Fonte> {
+        val arrayFontesActive = ArrayList<Fonte>()
+        appData.arrayFontes.forEach {
+            if (it.isActive)
+                arrayFontesActive.add(it)
+        }
+
+        return arrayFontesActive
     }
 
-    fun adicionarFeedGroup(feedGroup: FeedGroup) {
-        for (group in arrayFeedGroups)
-            if (group.url == feedGroup.url)
+    fun adicionarFonte(novaFonte: Fonte) {
+        for (fonte in appData.arrayFontes)
+            if (fonte.url == novaFonte.url)
                 return
 
-        feedGroup.adicionado = true
-        arrayFeedGroups.add(feedGroup)
+        novaFonte.isActive = true
+        appData.arrayFontes.add(novaFonte)
         salvarDados()
     }
 
-    fun removerFeedGroup(feedGroup: FeedGroup) {
-        arrayFeedGroups.remove(feedGroup)
+    fun removerFonte(fonteId: Long) {
+        appData.arrayFontes.removeIf {
+            it.id == fonteId
+        }
         salvarDados()
     }
 
-    fun feedGroupExists(feedGroupId: Long): Boolean {
-        for (feed in arrayFeedGroups)
-            if (feed.id == feedGroupId)
+    fun atualizarFonte(fonteId: Long, isActive: Boolean) {
+        for (fonte in appData.arrayFontes)
+            if (fonte.id == fonteId)
+                fonte.isActive = isActive
+
+        salvarDados()
+    }
+
+    fun fonteExists(fonteId: Long): Boolean {
+        for (fonte in appData.arrayFontes)
+            if (fonte.id == fonteId)
                 return true
+        return false
+    }
+
+    /* FLUXO ARTIGOS */
+    fun getArtigos() = appData.arrayArtigos
+
+    fun getCategories(): ArrayList<String> {
+        val array = ArrayList<String>()
+
+        appData.arrayArtigos.forEach { artigo ->
+            artigo.categorias.forEach { categoria ->
+                if (!array.contains(categoria))
+                    array.add(categoria)
+            }
+        }
+        array.sort()
+
+        return array
+    }
+
+    fun getDestaques(): ArrayList<Artigo> {
+        val arrayDestaques = ArrayList<Artigo>()
+
+        appData.arrayArtigos.forEach { artigo ->
+            if (artigo.categorias.isNotEmpty())
+                arrayListOf("news").forEach { item ->
+                    if (Html.fromHtml(artigo.categorias.first(), Html.FROM_HTML_MODE_COMPACT).toString()
+                            .lowercase() == item
+                    )
+                        arrayDestaques.add(artigo)
+                }
+        }
+        return arrayDestaques
+    }
+
+    fun updateArtigos(array: ArrayList<Artigo>) {
+        appData.arrayArtigos.clear()
+        appData.arrayArtigos.addAll(array)
+        salvarDados()
+    }
+
+    /* FLUXO ARTIGOS SALVOS */
+    fun getArtigosSalvos() = appData.arrayArtigosSalvos
+
+    fun isArtigoSaved(artigo: Artigo): Boolean {
+        appData.arrayArtigosSalvos.forEach {
+            if (it.titulo == artigo.titulo)
+                return true
+        }
 
         return false
     }
 
-    /*ARTIGOS*/
-    fun getArtigos() = arrayArtigos
+    fun adicionarArtigoSalvo(artigo: Artigo) {
+        appData.arrayArtigosSalvos.forEach {
+            if (it.titulo == artigo.titulo) return
+        }
 
-    fun updateArtigos(array: ArrayList<Artigo>) {
-        arrayArtigos.clear()
-        arrayArtigos.addAll(array)
+        appData.arrayArtigosSalvos.add(artigo)
         salvarDados()
     }
+
+    fun removerArtigoSalvo(artigo: Artigo) {
+        var artigoRemover: Artigo? = null
+        appData.arrayArtigosSalvos.forEach {
+            if (it.titulo == artigo.titulo)
+                artigoRemover = it
+        }
+
+        appData.arrayArtigosSalvos.remove(artigoRemover)
+        salvarDados()
+    }
+
 }
