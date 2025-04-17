@@ -1,40 +1,49 @@
 <resources>
     <string name="app_name">Meus Feeds</string>
+    <string name="url_termos" translatable="false">https://deyvidandrades.github.io/MeusFeeds/termos/</string>
+    <string name="version" translatable="false">%1$s v%2$s\n%3$s</string>
+    <string name="desenvolvido_por">por @deyvidandrades</string>
     <string name="voce_precisa_ler">Antes de continuar, você precisa ler e aceitar nossos Termos de Serviço e Política de Privacidade.</string>
-    <string name="leia_nossos">Leia:</string>
     <string name="termos_de_servico"><u>Termos de Serviço e Política de Privacidade</u></string>
     <string name="aceitar_e_continuar">Aceitar e Continuar</string>
-    <string name="bem_vindo">Seja bem vindo ao Meus Feeds!</string>
     <string name="imagem_de_duas_pessoas_lendo_um_artigo_no_smartphone">Imagem de duas pessoas lendo um artigo no smartphone</string>
     <string name="categoria">Categoria</string>
     <string name="continuar_lendo">Continuar lendo</string>
     <string name="descricao">Descrição</string>
     <string name="titulo">Titulo</string>
-    <string name="adicionando_novos_feeds">Adicionando novos feeds</string>
-    <string name="adicionar_feed">Adicionar feed</string>
-    <string name="grupo_adicionado">Grupo adicionado</string>
-    <string name="grupo_removido">Grupo removido</string>
-    <string name="concluido">Concluido</string>
     <string name="tudo">Todos os feeds</string>
     <string name="data">data</string>
     <string name="links_estao_desativados_nos_artigos_por_questoes_de_seguranca">Links estão desativados nos artigos por questões de segurança.</string>
     <string name="nao_possivel_conferir">Não podemos verificar as fontes de conteúdo. Por este motivo sugerimos que você confira as informações em outras fontes de sua confiança.</string>
     <string name="cole_um_endereco_de_feed_rss">Cole um endereço de feed RSS</string>
     <string name="carregando">Carregando</string>
-    <string name="gerenciar_feeds">Gerenciar feeds</string>
     <string name="buscar_feeds">Buscar feeds</string>
     <string name="termos">Termos</string>
-    <string name="leia_seus_feeds_favoritos">Leia seus feeds favoritos em um só lugar!</string>
     <string name="tema_escuro">Tema escuro</string>
     <string name="nenhum_artigo_foi_carregado_busque_e_adicione_novas_fontes_para_ver_novos_artigos">Nenhum artigo foi carregado, voce pode buscar e adicionar novas fontes para ver novos artigos.</string>
+    <string name="nenhum_artigo_foi_salvo">Nenhum artigo foi salvo, voce pode salvar qualquer artigo listado na tela inicial.</string>
     <string name="notificacoes">Notificações</string>
-    <string name="configurar_notifica_es">Configurar notificações</string>
     <string name="voce_recebera_uma_notificacao">Você receberá notificações durante o dia. As notificações mostram o artigo mais recentes de um dos seus feeds.</string>
     <string name="notificacao_novo_artigo">Novo artigo disponivel</string>
     <string name="mais_artigos">Veja mais</string>
     <string name="salvar_e_fechar">Salvar e Fechar</string>
     <string name="falha_ao_encontrar_feed">Falha ao encontrar feed</string>
-    <string name="atualizar_feeds">Atualizar</string>
     <string name="explore_seus">Explore Seus</string>
     <string name="feeds_favoritos">Feeds Favoritos!</string>
+    <string name="debug_text" translatable="false">debug text</string>
+    <string name="adicionar_fonte"><u>Adicionar</u></string>
+    <string name="recomendados">Recomendados</string>
+    <string name="seus_feeds">Seus feeds</string>
+    <string name="botao_para_exibir_esconder_informacoes">Botão para exibir ou esconder as informações no final da página</string>
+    <string name="botao_para_retornar_a_tela_anterior">Botão para retornar a tela anterior.</string>
+    <string name="buscar_fonte_de_rss">Buscar fonte de RSS</string>
+    <string name="fonte_adicionada">%1$s adicionado.</string>
+    <string name="remover_fonte">Remover Fonte</string>
+    <string name="detalhes">Detalhes</string>
+    <string name="customizacao">Customização</string>
+    <string name="sobre">Sobre</string>
+    <string name="home">Home</string>
+    <string name="fontes">Fontes</string>
+    <string name="salvos">Salvos</string>
+    <string name="configuracoes">Configuraões</string>
 </resources>
