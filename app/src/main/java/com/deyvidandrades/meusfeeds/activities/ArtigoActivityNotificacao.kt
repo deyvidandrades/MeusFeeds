@@ -11,7 +11,7 @@ import androidx.core.widget.NestedScrollView
 import com.deyvidandrades.meusfeeds.R
 import com.deyvidandrades.meusfeeds.assistentes.NotificacoesUtil
 import com.deyvidandrades.meusfeeds.assistentes.RequestManager
-import com.deyvidandrades.meusfeeds.objetos.Artigo
+import com.deyvidandrades.meusfeeds.dataclasses.Artigo
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.gson.Gson
 
@@ -41,13 +41,13 @@ class ArtigoActivityNotificacao : AppCompatActivity() {
             val tvArtigoConteudo: TextView = findViewById(R.id.tv_artigo_conteudo)
             val ivArtigoCapa: ShapeableImageView = findViewById(R.id.iv_artigo_capa)
 
-            tvFeedGroupTitulo.text = artigo.feedGroup.titulo
+            tvFeedGroupTitulo.text = artigo.fonte.titulo
             tvArtigoData.text = Html.fromHtml(artigo.data, Html.FROM_HTML_MODE_COMPACT)
             tvArtigoTitulo.text = Html.fromHtml(artigo.titulo, Html.FROM_HTML_MODE_COMPACT)
             tvArtigoDescricao.text = Html.fromHtml(
                 Html.fromHtml(artigo.descricao, Html.FROM_HTML_MODE_COMPACT).toString(), Html.FROM_HTML_MODE_COMPACT
             )
-            tvArtigoCategoria.text = Html.fromHtml(artigo.categoria, Html.FROM_HTML_MODE_COMPACT)
+            tvArtigoCategoria.text = Html.fromHtml(artigo.categorias.joinToString(), Html.FROM_HTML_MODE_COMPACT)
 
             tvArtigoConteudo.text = Html.fromHtml(
                 Html.fromHtml(artigo.conteudo, Html.FROM_HTML_MODE_COMPACT).toString(), Html.FROM_HTML_MODE_COMPACT
@@ -55,10 +55,10 @@ class ArtigoActivityNotificacao : AppCompatActivity() {
 
             ivArtigoCapa.visibility = if (artigo.imagem != "") View.VISIBLE else View.GONE
 
-            RequestManager.carregarImagem(this, ivFeedGroupFavicon, artigo.feedGroup.favicon)
+            RequestManager.carregarImagem(this, ivFeedGroupFavicon, artigo.fonte.favicon)
             RequestManager.carregarImagem(this, ivArtigoCapa, artigo.imagem)
 
-            tvArtigoCategoria.visibility = if (artigo.categoria == "") View.GONE else View.VISIBLE
+            tvArtigoCategoria.visibility = if (artigo.categorias.isEmpty()) View.GONE else View.VISIBLE
 
             btnVoltar.setOnClickListener {
                 finish()
