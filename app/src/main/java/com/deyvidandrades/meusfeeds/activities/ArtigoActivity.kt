@@ -5,7 +5,9 @@ import android.text.Html
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.core.widget.NestedScrollView
 import com.deyvidandrades.meusfeeds.R
 import com.deyvidandrades.meusfeeds.assistentes.DataUtil
@@ -16,6 +18,8 @@ import com.google.android.material.imageview.ShapeableImageView
 class ArtigoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = false
+        enableEdgeToEdge()
         setContentView(R.layout.activity_artigo)
 
         val artigo = Persistencia.ARTIGO_ATUAL
@@ -36,22 +40,22 @@ class ArtigoActivity : AppCompatActivity() {
             val tvArtigoConteudo: TextView = findViewById(R.id.tv_artigo_conteudo)
             val ivArtigoCapa: ShapeableImageView = findViewById(R.id.iv_artigo_capa)
 
-            tvFeedGroupTitulo.text = artigo.feedGroup.titulo
+            tvFeedGroupTitulo.text = artigo.fonte.titulo
             tvArtigoData.text = DataUtil.getDataFormatada(artigo.getDataMilli())
             tvArtigoTitulo.text = Html.fromHtml(artigo.titulo, Html.FROM_HTML_MODE_COMPACT)
             tvArtigoDescricao.text = Html.fromHtml(
                 Html.fromHtml(artigo.descricao, Html.FROM_HTML_MODE_COMPACT).toString(), Html.FROM_HTML_MODE_COMPACT
             )
-            tvArtigoCategoria.text = Html.fromHtml(artigo.categoria, Html.FROM_HTML_MODE_COMPACT)
+            tvArtigoCategoria.text = Html.fromHtml(artigo.categorias.joinToString(), Html.FROM_HTML_MODE_COMPACT)
 
             tvArtigoConteudo.text = Html.fromHtml(
                 Html.fromHtml(artigo.conteudo, Html.FROM_HTML_MODE_COMPACT).toString(), Html.FROM_HTML_MODE_COMPACT
             )
 
-            RequestManager.carregarImagem(this, ivFeedGroupFavicon, artigo.feedGroup.favicon)
+            RequestManager.carregarImagem(this, ivFeedGroupFavicon, artigo.fonte.favicon)
             RequestManager.carregarImagem(this, ivArtigoCapa, artigo.imagem)
 
-            tvArtigoCategoria.visibility = if (artigo.categoria == "") View.GONE else View.VISIBLE
+            tvArtigoCategoria.visibility = if (artigo.categorias.isEmpty()) View.GONE else View.VISIBLE
 
             btnVoltar.setOnClickListener {
                 finish()

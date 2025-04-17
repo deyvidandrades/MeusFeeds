@@ -56,8 +56,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/rounded_r16_outline"
-                    android:paddingVertical="8dp"
                     android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
                     android:text="@string/categoria"
                     android:textAlignment="center"
                     android:textSize="12sp" />
@@ -84,13 +84,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="16sp"
-                    android:background="@drawable/rounded_r16_outline"
+                    android:background="@drawable/rounded_r12_outline_fill"
                     android:drawablePadding="8dp"
                     android:padding="16dp"
                     android:text="@string/nao_possivel_conferir"
                     android:textAlignment="center"
                     android:textSize="12sp"
-                    app:drawableTint="?android:colorAccent"
+                    app:drawableTint="?android:colorPrimary"
                     app:drawableTopCompat="@drawable/round_security_24" />
 
                 <TextView
@@ -99,13 +99,13 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginBottom="16dp"
-                    android:background="@drawable/rounded_r16_outline"
+                    android:background="@drawable/rounded_r12_outline_fill"
                     android:drawablePadding="8dp"
                     android:padding="16dp"
                     android:text="@string/links_estao_desativados_nos_artigos_por_questoes_de_seguranca"
                     android:textAlignment="center"
                     android:textSize="12sp"
-                    app:drawableTint="?android:colorAccent"
+                    app:drawableTint="?android:colorPrimary"
                     app:drawableTopCompat="@drawable/round_info_outline_24" />
 
             </LinearLayout>

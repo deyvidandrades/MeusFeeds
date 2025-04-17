@@ -32,7 +32,7 @@ object NotificacoesUtil {
     }
 
     fun enviarNotificacao(context: Context) {
-        Persistencia.getInstance(context)
+        Persistencia.init(context)
 
         val artigos = Persistencia.getArtigos()
         artigos.shuffle()
@@ -79,9 +79,9 @@ object NotificacoesUtil {
                 .setAutoCancel(true)
                 .setColorized(true)
                 .setShowWhen(true)
-                .setColor(context.getColor(R.color.accent))
+                .setColor(context.getColor(R.color.primary))
                 .setCategory(Notification.CATEGORY_MESSAGE)
-                .setContentTitle(artigo.feedGroup.titulo)
+                .setContentTitle(artigo.fonte.titulo)
                 .setContentText(Html.fromHtml(artigo.titulo, Html.FROM_HTML_MODE_COMPACT))
                 .setSubText(context.getString(R.string.notificacao_novo_artigo))
                 .setSmallIcon(R.drawable.rounded_space_dashboard_24)

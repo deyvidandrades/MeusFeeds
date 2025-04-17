@@ -14,21 +14,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.HttpURLConnection
 import java.net.URL
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 object RequestManager {
 
     suspend fun fazerRequisicao(url: URL): String = withContext(Dispatchers.IO) {
-        suspendCoroutine { continuation ->
-            try {
-                val connection = URL(url.toString()).openConnection() as HttpURLConnection
-                val result = connection.inputStream.bufferedReader().use { it.readText() }
-
-                continuation.resume(result)
-            } catch (_: Exception) {
-                continuation.resume("")
-            }
+        try {
+            val connection = URL(url.toString()).openConnection() as HttpURLConnection
+            connection.inputStream.bufferedReader().use { it.readText() }
+        } catch (_: Exception) {
+            ""
         }
     }
 
@@ -63,28 +57,33 @@ object RequestManager {
 
     fun carregarImagem(context: Context, url: String, listener: (Bitmap?) -> Unit) {
         if (url != "") {
-            Glide.with(context)
-                .asBitmap()
-                .load(url)
-                .listener(object : RequestListener<Bitmap> {
-                    override fun onLoadFailed(
-                        e: GlideException?, model: Any?, target: Target<Bitmap>, isFirstResource: Boolean
-                    ): Boolean {
-                        return false
-                    }
+            try {
 
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        model: Any,
-                        target: Target<Bitmap>?,
-                        dataSource: DataSource,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        listener.invoke(resource)
-                        return true
-                    }
+                Glide.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .listener(object : RequestListener<Bitmap> {
+                        override fun onLoadFailed(
+                            e: GlideException?, model: Any?, target: Target<Bitmap>, isFirstResource: Boolean
+                        ): Boolean {
+                            return false
+                        }
 
-                }).submit()
+                        override fun onResourceReady(
+                            resource: Bitmap,
+                            model: Any,
+                            target: Target<Bitmap>?,
+                            dataSource: DataSource,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            listener.invoke(resource)
+                            return true
+                        }
+
+                    }).submit()
+            } catch (_: NullPointerException) {
+                listener.invoke(null)
+            }
         } else
             listener.invoke(null)
     }

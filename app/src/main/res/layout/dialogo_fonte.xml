@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_r24_top"
+    android:backgroundTint="@color/background"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    tools:context=".activities.WelcomeActivity">
+
+    <LinearLayout
+        android:id="@+id/barra_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/barra_dialogs" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/barra_holder"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_fonte_favicon"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/surface"
+            app:shapeAppearance="@style/circle" />
+
+        <TextView
+            android:id="@+id/tv_fonte_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="24dp"
+            android:drawablePadding="6dp"
+            android:text="@string/debug_text"
+            android:textAlignment="center"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_fonte_descricao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="8dp"
+            android:drawablePadding="6dp"
+            android:text="@string/debug_text"
+            android:textAlignment="center"
+            android:textColor="@color/text_light" />
+
+        <TextView
+            android:id="@+id/tv_fonte_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="12dp"
+            android:drawablePadding="6dp"
+            android:text="@string/debug_text"
+            android:textAlignment="center"
+            android:textColor="?android:colorPrimary"
+            android:textSize="12sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_remove_fonte"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:text="@string/remover_fonte"
+            android:textColor="@color/error"
+            app:icon="@drawable/round_remove_circle_outline_24"
+            app:iconTint="@color/error" />
+    </LinearLayout>
+</RelativeLayout>

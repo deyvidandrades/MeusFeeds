@@ -1,84 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingVertical="16dp"
-    tools:context=".activities.MainActivity">
-
-    <include layout="@layout/cartao_loading" />
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/barra"
         layout="@layout/barra_main" />
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progress_indicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/barra"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:indicatorColor="?android:colorAccent" />
-
-    <LinearLayout
-        android:id="@+id/li_nenhum_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:orientation="vertical"
-        android:padding="24dp"
-        tools:ignore="UseCompoundDrawables">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:contentDescription="@string/imagem_de_duas_pessoas_lendo_um_artigo_no_smartphone"
-            android:src="@drawable/undraw_sharing_articles_re_jnkp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginVertical="24sp"
-            android:background="@drawable/rounded_r16_outline"
-            android:drawablePadding="8dp"
-            android:padding="16dp"
-            android:text="@string/nenhum_artigo_foi_carregado_busque_e_adicione_novas_fontes_para_ver_novos_artigos"
-            android:textAlignment="center"
-            android:textSize="12sp"
-            app:drawableTint="?android:colorAccent"
-            app:drawableTopCompat="@drawable/round_info_outline_24" />
-    </LinearLayout>
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/barra">
+        android:layout_above="@+id/bottom_navigation"
+        android:layout_below="@+id/barra" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_artigos"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <include layout="@layout/menu_settings" />
-
-    <Button
-        android:id="@+id/btn_filtro"
-        style="@style/Widget.Material3.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
         android:layout_alignParentBottom="true"
-        android:layout_margin="24dp"
-        android:elevation="2dp"
-        android:text="@string/tudo"
-        app:icon="@drawable/round_filter_list_24"
-        tools:ignore="RelativeOverlap" />
-
+        android:background="@color/surfaceVariant"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_menu" />
 </RelativeLayout>

@@ -7,5 +7,5 @@
         android:width="1dp"
         android:color="@color/md_theme_surfaceDim" />-->
 
-    <solid android:color="?colorSurfaceVariant" />
+    <solid android:color="?colorSurface" />
 </shape>

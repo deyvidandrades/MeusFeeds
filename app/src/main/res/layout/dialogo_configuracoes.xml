@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_r24_top"
+    android:backgroundTint="@color/background"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    tools:context=".activities.WelcomeActivity">
+
+    <LinearLayout
+        android:id="@+id/barra_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/barra"
+            layout="@layout/barra_dialogs" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="?android:colorPrimary" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/barra_holder">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/customizacao"
+                android:textSize="12sp" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switch_notificacoes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_r12_outline_fill"
+                android:checked="true"
+                android:paddingStart="12dp"
+                android:paddingEnd="8dp"
+                android:text="@string/notificacoes" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/voce_recebera_uma_notificacao"
+                android:textColor="@color/text_light"
+                android:textSize="12sp" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switch_tema"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_r12_outline_fill"
+                android:checked="true"
+                android:paddingStart="12dp"
+                android:paddingEnd="8dp"
+                android:text="@string/tema_escuro" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/sobre"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_feedsearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_r12_outline_fill"
+                android:padding="16dp"
+                android:text="@string/feedsearch_api"
+                app:drawableEndCompat="@drawable/rounded_arrow_forward_ios_24"
+                app:drawableTint="?android:colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_termos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_r12_outline_fill"
+                android:padding="16dp"
+                android:text="@string/termos"
+                app:drawableEndCompat="@drawable/rounded_arrow_forward_ios_24"
+                app:drawableTint="?android:colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_versao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="24dp"
+                android:textAlignment="center"
+                android:textColor="@color/text_light"
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_salvar"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/salvar_e_fechar"
+                app:icon="@drawable/round_check_circle_outline_24" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
