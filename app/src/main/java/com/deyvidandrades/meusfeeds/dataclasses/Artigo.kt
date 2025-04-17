@@ -1,30 +1,23 @@
-package com.deyvidandrades.meusfeeds.objetos
+package com.deyvidandrades.meusfeeds.dataclasses
 
-import java.time.Instant
-import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.Calendar
-import java.util.Locale
 
-data class FeedGroup(
+data class Artigo(
     val titulo: String,
+    val conteudo: String,
     val descricao: String,
-    val favicon: String,
-    val itemCount: Int,
-    val lastUpdate: String,
-    val url: String,
-    val score: Int,
-    var adicionado: Boolean = false
-) : Comparable<FeedGroup> {
+    val fonte: Fonte,
+    val data: String,
+    val link: String = "",
+    val imagem: String = "",
+    val categorias: ArrayList<String> = ArrayList()
+) : Comparable<Artigo> {
     val id: Long = Calendar.getInstance().timeInMillis
 
-    override fun toString(): String {
-        return "Artigo(titulo=$titulo, descricao=$descricao, favicon=$favicon, itemCount=$itemCount, lastUpdate=$lastUpdate, url=$url, score=$score, id=$id, adicionado=$adicionado)"
-    }
-
-    private fun getDataMilli(): Long {
+    fun getDataMilli(): Long {
         val listaFormatos = listOf(
             DateTimeFormatter.BASIC_ISO_DATE,
             DateTimeFormatter.ISO_DATE,
@@ -47,7 +40,7 @@ data class FeedGroup(
 
         for (formato in listaFormatos) {
             try {
-                val zonedDateTime = ZonedDateTime.parse(lastUpdate, formato)
+                val zonedDateTime = ZonedDateTime.parse(data, formato)
                 val instant = zonedDateTime.toInstant()
                 milli = instant.toEpochMilli()
                 break
@@ -60,14 +53,7 @@ data class FeedGroup(
         return milli
     }
 
-    fun getDataFormatada(): String {
-        val instant = Instant.ofEpochMilli(getDataMilli())
-        val zonedDateTime = instant.atZone(ZoneId.systemDefault())
-        val formatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy, HH:mm", Locale.getDefault())
-        return zonedDateTime.format(formatter)
-    }
-
-    override fun compareTo(other: FeedGroup): Int {
+    override fun compareTo(other: Artigo): Int {
         return getDataMilli().compareTo(other.getDataMilli())
     }
 }

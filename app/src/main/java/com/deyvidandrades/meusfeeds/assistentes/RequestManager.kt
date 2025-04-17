@@ -63,28 +63,33 @@ object RequestManager {
 
     fun carregarImagem(context: Context, url: String, listener: (Bitmap?) -> Unit) {
         if (url != "") {
-            Glide.with(context)
-                .asBitmap()
-                .load(url)
-                .listener(object : RequestListener<Bitmap> {
-                    override fun onLoadFailed(
-                        e: GlideException?, model: Any?, target: Target<Bitmap>, isFirstResource: Boolean
-                    ): Boolean {
-                        return false
-                    }
+            try {
 
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        model: Any,
-                        target: Target<Bitmap>?,
-                        dataSource: DataSource,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        listener.invoke(resource)
-                        return true
-                    }
+                Glide.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .listener(object : RequestListener<Bitmap> {
+                        override fun onLoadFailed(
+                            e: GlideException?, model: Any?, target: Target<Bitmap>, isFirstResource: Boolean
+                        ): Boolean {
+                            return false
+                        }
 
-                }).submit()
+                        override fun onResourceReady(
+                            resource: Bitmap,
+                            model: Any,
+                            target: Target<Bitmap>?,
+                            dataSource: DataSource,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            listener.invoke(resource)
+                            return true
+                        }
+
+                    }).submit()
+            } catch (_: NullPointerException) {
+                listener.invoke(null)
+            }
         } else
             listener.invoke(null)
     }

@@ -1,22 +1,26 @@
-package com.deyvidandrades.meusfeeds.objetos
+package com.deyvidandrades.meusfeeds.dataclasses
 
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.Calendar
 
-data class Artigo(
+data class Fonte(
     val titulo: String,
-    val conteudo: String,
     val descricao: String,
-    val feedGroup: FeedGroup,
-    val data: String,
-    val imagem: String = "",
-    val categoria: String = ""
-) : Comparable<Artigo> {
+    val favicon: String,
+    val itemCount: Int,
+    val url: String,
+    val lastUpdate: String,
+    var isActive: Boolean = false,
     val id: Long = Calendar.getInstance().timeInMillis
+) : Comparable<Fonte> {
 
-    fun getDataMilli(): Long {
+    override fun toString(): String {
+        return "Fonte(titulo=$titulo, descricao=$descricao, favicon=$favicon, itemCount=$itemCount, lastUpdate=$lastUpdate, url=$url, id=$id, isActive=$isActive)"
+    }
+
+    private fun getDataMilli(): Long {
         val listaFormatos = listOf(
             DateTimeFormatter.BASIC_ISO_DATE,
             DateTimeFormatter.ISO_DATE,
@@ -39,7 +43,7 @@ data class Artigo(
 
         for (formato in listaFormatos) {
             try {
-                val zonedDateTime = ZonedDateTime.parse(data, formato)
+                val zonedDateTime = ZonedDateTime.parse(lastUpdate, formato)
                 val instant = zonedDateTime.toInstant()
                 milli = instant.toEpochMilli()
                 break
@@ -52,7 +56,14 @@ data class Artigo(
         return milli
     }
 
-    override fun compareTo(other: Artigo): Int {
+    /*fun getDataFormatada(): String {
+        val instant = Instant.ofEpochMilli(getDataMilli())
+        val zonedDateTime = instant.atZone(ZoneId.systemDefault())
+        val formatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy, HH:mm", Locale.getDefault())
+        return zonedDateTime.format(formatter)
+    }*/
+
+    override fun compareTo(other: Fonte): Int {
         return getDataMilli().compareTo(other.getDataMilli())
     }
 }
