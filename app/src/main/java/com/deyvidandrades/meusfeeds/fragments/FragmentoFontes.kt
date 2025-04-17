@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,17 +15,20 @@ import com.deyvidandrades.meusfeeds.adapters.AdaptadorFontes
 import com.deyvidandrades.meusfeeds.adapters.AdaptadorFontesRecomendadas
 import com.deyvidandrades.meusfeeds.assistentes.Persistencia
 import com.deyvidandrades.meusfeeds.dataclasses.Fonte
-import com.deyvidandrades.meusfeeds.dialogs.DialogoBuscarFonte
 import com.deyvidandrades.meusfeeds.interfaces.OnFontesClickListener
 import com.deyvidandrades.meusfeeds.interfaces.OnFontesRecomendadasClickListener
 import com.google.android.material.button.MaterialButton
 
+
+@SuppressLint("NotifyDataSetChanged")
 class FragmentoFontes : Fragment(R.layout.fragmento_fontes), OnFontesClickListener, OnFontesRecomendadasClickListener {
     private var arrayFontesRecomendadas = ArrayList<Fonte>()
     private lateinit var adaptadorFontesRecomendadas: AdaptadorFontesRecomendadas
 
     private var arrayUserFontes = ArrayList<Fonte>()
     private lateinit var adaptadorUserFonte: AdaptadorFontes
+
+    private var selecionarTodos = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragmento_fontes, container, false)
@@ -53,12 +55,15 @@ class FragmentoFontes : Fragment(R.layout.fragmento_fontes), OnFontesClickListen
             mySwipeRefreshLayout.isRefreshing = false
         }
 
-        val btnAdicionarFonte: MaterialButton = view.findViewById(R.id.btn_add_fonte)
-        btnAdicionarFonte.setOnClickListener {
-            val customBottomSheet = DialogoBuscarFonte()
-            customBottomSheet.show(
-                (context as AppCompatActivity).supportFragmentManager, DialogoBuscarFonte().javaClass.name
-            )
+        val btnSelecionarTodos: MaterialButton = view.findViewById(R.id.btn_select_all)
+        btnSelecionarTodos.setOnClickListener {
+            arrayUserFontes.forEach {
+                it.isActive = selecionarTodos
+                Persistencia.atualizarFonte(it.id, selecionarTodos)
+            }
+
+            selecionarTodos = !selecionarTodos
+            adaptadorUserFonte.notifyDataSetChanged()
         }
 
         carregarFontesRecomendadas()
@@ -67,7 +72,6 @@ class FragmentoFontes : Fragment(R.layout.fragmento_fontes), OnFontesClickListen
         return view
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun carregarUserFontes() {
         arrayUserFontes.clear()
         arrayUserFontes.addAll(Persistencia.getFontes())
@@ -107,7 +111,6 @@ class FragmentoFontes : Fragment(R.layout.fragmento_fontes), OnFontesClickListen
         adaptadorFontesRecomendadas.notifyItemInserted(arrayFontesRecomendadas.lastIndex)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onFonteSelected(fonteId: Long, active: Boolean) {
         arrayUserFontes.forEach {
             if (it.id == fonteId) {
@@ -119,7 +122,6 @@ class FragmentoFontes : Fragment(R.layout.fragmento_fontes), OnFontesClickListen
         adaptadorUserFonte.notifyDataSetChanged()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onFonteRecomendadaSelected(fonteId: Long, active: Boolean) {
         arrayFontesRecomendadas.forEach {
             if (it.id == fonteId) {

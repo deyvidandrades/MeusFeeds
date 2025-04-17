@@ -43,4 +43,5 @@
     <string name="home">Home</string>
     <string name="fontes">Sources</string>
     <string name="salvos">Saved</string>
+    <string name="selecionar_todos"><u>Select all</u></string>
 </resources>

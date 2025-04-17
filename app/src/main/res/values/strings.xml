@@ -47,4 +47,5 @@
     <string name="fontes">Fontes</string>
     <string name="salvos">Salvos</string>
     <string name="configuracoes">Configurações</string>
+    <string name="selecionar_todos"><u>Selecionar todos</u></string>
 </resources>

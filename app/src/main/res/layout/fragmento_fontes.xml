@@ -69,12 +69,12 @@
             android:textSize="18sp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_add_fonte"
+            android:id="@+id/btn_select_all"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="@string/adicionar_fonte" />
+            android:text="@string/selecionar_todos" />
     </LinearLayout>
 
     <include layout="@layout/separador_m0" />

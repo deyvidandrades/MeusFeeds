@@ -64,7 +64,7 @@
                     android:nextFocusDown="@id/btn_buscar_feed"
                     android:imeOptions="flagNoEnterAction"
                     android:background="@drawable/rounded_r32_outline"
-                    android:inputType="textUri|textEmailAddress|textWebEditText" />
+                    android:inputType="textUri" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.recyclerview.widget.RecyclerView
