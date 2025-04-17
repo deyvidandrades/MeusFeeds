@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.net.toUri
 import com.deyvidandrades.meusfeeds.R
 import com.deyvidandrades.meusfeeds.assistentes.AnimacaoBotao
@@ -56,12 +57,19 @@ class DialogoConfiguracoes : BottomSheetDialogFragment() {
                 WorkManagerUtil.iniciarWorker(requireContext(), WorkManagerUtil.Tipo.ARTIGOS)
             }
 
-            if (switchNotificacoes.isChecked != Persistencia.getNotifications())
+            if (switchNotificacoes.isChecked && !Persistencia.getNotifications())
                 Persistencia.setNotifications(true)
+            else if (!switchNotificacoes.isChecked && Persistencia.getNotifications())
+                Persistencia.setNotifications(false)
 
-            if (switchTema.isChecked != Persistencia.getDarkMode())
+            if (switchTema.isChecked && !Persistencia.getDarkMode())
                 Persistencia.setDarkMode(true)
+            else if(!switchTema.isChecked && Persistencia.getDarkMode())
+                Persistencia.setDarkMode(false)
 
+            AppCompatDelegate.setDefaultNightMode(
+                if (Persistencia.getDarkMode()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+            )
             dismiss()
         }
         tvTermos.setOnClickListener {

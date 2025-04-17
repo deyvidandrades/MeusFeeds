@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.viewpager2.widget.ViewPager2
@@ -35,6 +36,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, WelcomeActivity::class.java))
             finish()
         }
+        AppCompatDelegate.setDefaultNightMode(
+            if (Persistencia.getDarkMode()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        )
 
         configurarBottomNav()
         configurarPermissoesNotificacao()
