@@ -1,4 +1,4 @@
-package com.deyvidandrades.meusfeeds.servicos
+package com.deyvidandrades.meusfeeds.services
 
 import android.content.BroadcastReceiver
 import android.content.Context
