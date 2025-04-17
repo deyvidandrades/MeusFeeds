@@ -30,10 +30,7 @@ import com.deyvidandrades.meusfeeds.dataclasses.Artigo
 import com.deyvidandrades.meusfeeds.interfaces.OnArtigoClickListener
 import com.deyvidandrades.meusfeeds.interfaces.OnCategoryClickListener
 import com.google.android.material.progressindicator.LinearProgressIndicator
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import java.net.URL
 
 class FragmentoHome : Fragment(R.layout.fragmento_home), OnCategoryClickListener, OnArtigoClickListener {
@@ -188,31 +185,28 @@ class FragmentoHome : Fragment(R.layout.fragmento_home), OnCategoryClickListener
     @SuppressLint("SetTextI18n")
     private fun recarregarArtigos() {
         progress.visibility = View.VISIBLE
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch {
             val arrayUpdate = ArrayList<Artigo>()
             for (fonte in Persistencia.getFontesActive()) {
-                runBlocking {
-                    val result = RequestManager.fazerRequisicao(URL(fonte.url))
+                val result = RequestManager.fazerRequisicao(URL(fonte.url))
 
-                    if (result != "") {
-                        RssParser.getArrayArtigos(fonte, result) {
-                            arrayUpdate.addAll(it)
-                        }
+                if (result != "") {
+                    RssParser.getArrayArtigos(fonte, result) {
+                        arrayUpdate.addAll(it)
                     }
+
                 }
             }
 
-            withContext(Dispatchers.Main) {
-                arrayUpdate.sortByDescending { it.getDataMilli() }
-                Persistencia.updateArtigos(arrayUpdate)
+            arrayUpdate.sortByDescending { it.getDataMilli() }
+            Persistencia.updateArtigos(arrayUpdate)
 
-                progress.visibility = View.GONE
+            progress.visibility = View.GONE
 
-                carregarCategories()
-                carregarDestaques()
-                carregarFiltros()
-                carregarArtigos()
-            }
+            carregarCategories()
+            carregarDestaques()
+            carregarFiltros()
+            carregarArtigos()
         }
     }
 

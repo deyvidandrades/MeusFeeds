@@ -14,21 +14,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.HttpURLConnection
 import java.net.URL
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 object RequestManager {
 
     suspend fun fazerRequisicao(url: URL): String = withContext(Dispatchers.IO) {
-        suspendCoroutine { continuation ->
-            try {
-                val connection = URL(url.toString()).openConnection() as HttpURLConnection
-                val result = connection.inputStream.bufferedReader().use { it.readText() }
-
-                continuation.resume(result)
-            } catch (_: Exception) {
-                continuation.resume("")
-            }
+        try {
+            val connection = URL(url.toString()).openConnection() as HttpURLConnection
+            connection.inputStream.bufferedReader().use { it.readText() }
+        } catch (_: Exception) {
+            ""
         }
     }
 
