@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:layout_weight="1"
+    android:background="@drawable/rounded_r12_outline_fill"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/li_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_unchecked"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/rounded_circle_24"
+            app:iconTint="@color/text_light" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_checked"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:icon="@drawable/round_check_circle_24" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/li_info_holder"
+        android:layout_width="match_parent"
+        android:layout_marginTop="-8dp"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_fonte_favicon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@color/surface"
+            app:shapeAppearance="@style/circle" />
+
+        <TextView
+            android:id="@+id/tv_fonte_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16sp"
+            android:drawablePadding="6dp"
+            android:text="@string/debug_text"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_fonte_descricao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="2dp"
+            android:textAlignment="center"
+            android:drawablePadding="6dp"
+            android:textSize="12sp"
+            android:textColor="@color/text_light"
+            android:text="@string/debug_text" />
+
+    </LinearLayout>
+</LinearLayout>

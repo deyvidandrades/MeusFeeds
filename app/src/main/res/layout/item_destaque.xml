@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/re_holder_destaque"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginTop="8dp">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_r12_outline"
+        android:backgroundTint="@color/surfaceVariant" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_artigo_capa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:shapeAppearance="@style/rounded_16" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_r16"
+        android:backgroundTint="@color/background"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_fonte_favicon"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/surfaceVariant"
+            app:shapeAppearance="@style/circle" />
+
+        <TextView
+            android:id="@+id/tv_fonte_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:text="@string/titulo"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_artigo_titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/titulo"
+            android:textColor="@color/background"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_artigo_descricao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:text="@string/descricao"
+            android:textColor="@color/surfaceVariant"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_artigo_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/data"
+            android:textColor="@color/surfaceVariant"
+            android:textSize="12sp" />
+    </LinearLayout>
+</RelativeLayout>
