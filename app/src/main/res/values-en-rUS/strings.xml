@@ -15,7 +15,6 @@
     <string name="links_estao_desativados_nos_artigos_por_questoes_de_seguranca">Links are deactivated on the articles for privacy and safety reasons.</string>
     <string name="nao_possivel_conferir">We cannot verify the sources of the feeds. For that reason, we strongly suggest that you check all the information you read in sources that you can verify.</string>
     <string name="cole_um_endereco_de_feed_rss">Input the address for an RSS feed</string>
-    <string name="carregando">Loading</string>
     <string name="buscar_feeds">Search feeds</string>
     <string name="termos">Terms</string>
     <string name="tema_escuro">Dark mode</string>
