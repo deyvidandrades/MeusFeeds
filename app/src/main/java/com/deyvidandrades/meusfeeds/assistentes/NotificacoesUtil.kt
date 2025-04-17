@@ -79,7 +79,7 @@ object NotificacoesUtil {
                 .setAutoCancel(true)
                 .setColorized(true)
                 .setShowWhen(true)
-                .setColor(context.getColor(R.color.accent))
+                .setColor(context.getColor(R.color.primary))
                 .setCategory(Notification.CATEGORY_MESSAGE)
                 .setContentTitle(artigo.fonte.titulo)
                 .setContentText(Html.fromHtml(artigo.titulo, Html.FROM_HTML_MODE_COMPACT))
