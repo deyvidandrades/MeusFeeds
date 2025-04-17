@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@color/surfaceVariant"
+    android:orientation="vertical"
+    android:paddingTop="24dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,8 +14,8 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <Button
-            android:id="@+id/btn_opcoes"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_settings"
             style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,11 +27,13 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/btn_add"
-            android:layout_toEndOf="@+id/btn_opcoes"
+            android:layout_toEndOf="@+id/btn_settings"
             android:text="@string/app_name"
-            android:textSize="20sp" />
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_add"
             style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="wrap_content"
