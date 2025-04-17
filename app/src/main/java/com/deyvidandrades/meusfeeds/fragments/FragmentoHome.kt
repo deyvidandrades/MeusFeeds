@@ -81,7 +81,7 @@ class FragmentoHome : Fragment(R.layout.fragmento_home), OnCategoryClickListener
         val recyclerViewCategories: RecyclerView = view.findViewById(R.id.recycler_categories)
         adaptadorCategories = AdaptadorCategories(requireContext(), arrayCategories, this)
 
-        recyclerViewCategories.setHasFixedSize(true)
+        recyclerViewCategories.setHasFixedSize(false)
         recyclerViewCategories.adapter = adaptadorCategories
         recyclerViewCategories.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
