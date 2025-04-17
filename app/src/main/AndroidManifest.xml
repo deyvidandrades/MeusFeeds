@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -18,7 +17,7 @@
         >
 
         <receiver
-            android:name=".servicos.BootReceiver"
+            android:name=".services.BootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -27,7 +26,7 @@
         </receiver>
 
         <receiver
-            android:name=".servicos.FeedGroupsWorker"
+            android:name=".services.FonteWorker"
             android:enabled="true" />
 
         <activity
@@ -42,9 +41,7 @@
         </activity>
 
         <activity android:name="com.deyvidandrades.meusfeeds.activities.WelcomeActivity" />
-        <activity android:name="com.deyvidandrades.meusfeeds.activities.CarregarDadosActivity" />
         <activity android:name="com.deyvidandrades.meusfeeds.activities.ArtigoActivity" />
-        <activity android:name="com.deyvidandrades.meusfeeds.activities.GerenciarFeedsActivity" />
         <activity android:name="com.deyvidandrades.meusfeeds.activities.ArtigoActivityNotificacao" />
     </application>
 
