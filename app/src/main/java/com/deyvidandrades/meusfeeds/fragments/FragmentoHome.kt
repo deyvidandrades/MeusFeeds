@@ -21,14 +21,14 @@ import androidx.recyclerview.widget.SnapHelper
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.deyvidandrades.meusfeeds.R
 import com.deyvidandrades.meusfeeds.adapters.AdaptadorCategories
-import com.deyvidandrades.meusfeeds.adapters.AdaptadorPreviewDestaques
 import com.deyvidandrades.meusfeeds.adapters.AdaptadorPreviewArtigos
+import com.deyvidandrades.meusfeeds.adapters.AdaptadorPreviewDestaques
 import com.deyvidandrades.meusfeeds.assistentes.Persistencia
 import com.deyvidandrades.meusfeeds.assistentes.RequestManager
 import com.deyvidandrades.meusfeeds.assistentes.RssParser
+import com.deyvidandrades.meusfeeds.dataclasses.Artigo
 import com.deyvidandrades.meusfeeds.interfaces.OnArtigoClickListener
 import com.deyvidandrades.meusfeeds.interfaces.OnCategoryClickListener
-import com.deyvidandrades.meusfeeds.dataclasses.Artigo
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

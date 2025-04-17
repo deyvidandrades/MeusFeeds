@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.deyvidandrades.meusfeeds.R
 import com.deyvidandrades.meusfeeds.assistentes.AnimacaoBotao
 import com.deyvidandrades.meusfeeds.assistentes.Persistencia
-import androidx.core.net.toUri
 
 class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

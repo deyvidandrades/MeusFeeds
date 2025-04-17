@@ -14,8 +14,8 @@ import com.deyvidandrades.meusfeeds.activities.ArtigoActivity
 import com.deyvidandrades.meusfeeds.assistentes.DataUtil
 import com.deyvidandrades.meusfeeds.assistentes.Persistencia
 import com.deyvidandrades.meusfeeds.assistentes.RequestManager
-import com.deyvidandrades.meusfeeds.interfaces.OnArtigoClickListener
 import com.deyvidandrades.meusfeeds.dataclasses.Artigo
+import com.deyvidandrades.meusfeeds.interfaces.OnArtigoClickListener
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 
