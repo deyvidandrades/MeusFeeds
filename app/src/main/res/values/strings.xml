@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Meus Feeds</string>
     <string name="url_termos" translatable="false">https://deyvidandrades.github.io/MeusFeeds/termos/</string>
+    <string name="url_feedsearch_api" translatable="false">https://feedsearch.dev/</string>
     <string name="version" translatable="false">%1$s v%2$s\n%3$s</string>
+    <string name="feedsearch_api" translatable="false">Feedsearch API</string>
     <string name="desenvolvido_por">por @deyvidandrades</string>
     <string name="voce_precisa_ler">Antes de continuar, você precisa ler e aceitar nossos Termos de Serviço e Política de Privacidade.</string>
     <string name="termos_de_servico"><u>Termos de Serviço e Política de Privacidade</u></string>
@@ -45,5 +47,5 @@
     <string name="home">Home</string>
     <string name="fontes">Fontes</string>
     <string name="salvos">Salvos</string>
-    <string name="configuracoes">Configuraões</string>
+    <string name="configuracoes">Configurações</string>
 </resources>
