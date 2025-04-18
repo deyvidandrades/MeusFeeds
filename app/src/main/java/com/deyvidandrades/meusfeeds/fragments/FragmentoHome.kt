@@ -143,7 +143,13 @@ class FragmentoHome : Fragment(R.layout.fragmento_home), OnCategoryClickListener
 
         listPopupWindow.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             btnEscolherCategorias.text = ((view) as TextView).text.toString()
-            fonteSelecionada = items[position]
+
+            fonteSelecionada = try {
+                items[position]
+            } catch (_:IndexOutOfBoundsException){
+                items[0]
+            }
+
             listPopupWindow.dismiss()
 
             carregarArtigos(fonteSelecionada)
