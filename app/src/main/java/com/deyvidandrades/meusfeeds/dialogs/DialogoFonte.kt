@@ -1,5 +1,6 @@
 package com.deyvidandrades.meusfeeds.dialogs
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ class DialogoFonte : BottomSheetDialogFragment() {
         val view = inflater.inflate(R.layout.dialogo_fonte, container, false)
 
         val btnVoltar: MaterialButton = view.findViewById(R.id.btn_voltar)
+        val btnShare: MaterialButton = view.findViewById(R.id.btn_share)
         val btnRemoverFonte: MaterialButton = view.findViewById(R.id.btn_remove_fonte)
         val fonte = Persistencia.FONTE_ATUAL
 
@@ -44,6 +46,16 @@ class DialogoFonte : BottomSheetDialogFragment() {
                 Persistencia.removerFonte(fonte.id)
                 Toast.makeText(requireContext(), "Fonte removida.", Toast.LENGTH_SHORT).show()
                 dismiss()
+            }
+
+            btnShare.visibility = View.VISIBLE
+            btnShare.setOnClickListener {
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, fonte.url)
+                }
+                val chooser = Intent.createChooser(intent, getString(R.string.compartilhando_fonte_de_rss))
+                requireContext().startActivity(chooser)
             }
         } else {
             Toast.makeText(requireContext(), "Nenhuma fonte carregada.", Toast.LENGTH_SHORT).show()

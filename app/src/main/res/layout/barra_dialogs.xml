@@ -14,6 +14,26 @@
         android:paddingHorizontal="8dp"
         android:paddingTop="12sp">
 
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toStartOf="@+id/btn_share"
+            android:text="@string/buscar_fonte_de_rss"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_share"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/btn_voltar"
+            android:visibility="gone"
+            app:icon="@drawable/rounded_share_24" />
+
         <Button
             android:id="@+id/btn_voltar"
             style="@style/Widget.Material3.Button.IconButton"
@@ -22,16 +42,6 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             app:icon="@drawable/rounded_close_24" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="12dp"
-            android:layout_toStartOf="@+id/btn_voltar"
-            android:text="@string/buscar_fonte_de_rss"
-            android:textSize="18sp" />
     </RelativeLayout>
 
     <include layout="@layout/separador_m0" />
