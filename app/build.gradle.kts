@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.deyvidandrades.meusfeeds"
-        minSdk = 31
+        minSdk = 34
         targetSdk = 35
         versionCode = 15
         versionName = "1.1.1"
@@ -24,11 +24,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
@@ -50,7 +50,7 @@ dependencies {
     implementation("com.google.android.play:review:2.0.2")
     implementation("com.google.android.play:review-ktx:2.0.2")
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    implementation("androidx.work:work-runtime-ktx:2.10.0")
+    implementation("androidx.work:work-runtime-ktx:2.10.1")
 
     //Test libraries
     testImplementation("junit:junit:4.13.2")
